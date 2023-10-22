@@ -17,6 +17,8 @@
 }
 
 body {
+  margin: 0;
+  padding: 0;
   font-family: monospace;
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
