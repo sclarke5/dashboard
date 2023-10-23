@@ -1,24 +1,33 @@
 import type { Metadata } from 'next'
 import './globals.css'
-import Provider from './components/Provider'
+import { Provider } from './components'
+import { CssBaseline } from '@mui/material'
+
+import ThemeWrapper from './ThemeWrapper'
 
 export const metadata: Metadata = {
   title: 'Administar',
   description: 'Administrate your shit',
 }
 
-export default function RootLayout({
+export const RootLayout = ({
   children,
 }: {
   children: React.ReactNode
-}) {
+}) => {
+
   return (
     <html lang="en">
       <body>
         <Provider>
-          {children}
+          <ThemeWrapper>
+            <CssBaseline />
+            {children}
+          </ThemeWrapper>
         </Provider>
       </body>
     </html>
   )
 }
+
+export default RootLayout;

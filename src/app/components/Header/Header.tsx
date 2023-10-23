@@ -1,6 +1,6 @@
 'use client'
 
-import * as React from 'react';
+import React, { useState, MouseEvent } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -15,21 +15,28 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { signIn, signOut, useSession } from 'next-auth/react';
+import ThemeToggle from './../ThemeToggle';
 
 const pages = ['Products', 'Pricing', 'Blog'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-export const Header = () => {
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+export type HeaderProps = {
+  ColorModeContext: React.Context<{ toggleColorMode: () => void; }>
+  mode: string;
+}
+
+export const Header = (props: HeaderProps) => {
+  const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
+  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
+
+  const { ColorModeContext, mode } = props;
 
   const { data: session } = useSession();
 
 
-  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+  const handleOpenNavMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
-  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+  const handleOpenUserMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
   };
 
@@ -61,7 +68,7 @@ export const Header = () => {
               textDecoration: 'none',
             }}
           >
-            LOGO
+            Administar
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -117,19 +124,22 @@ export const Header = () => {
               textDecoration: 'none',
             }}
           >
-            LOGO
+            Adminstar
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
+                sx={{ my: 2, 
+                  color: mode === 'dark' ? 'white' : 'black',
+                  display: 'block' }}
               >
                 {page}
               </Button>
             ))}
           </Box>
+          <ThemeToggle ColorModeContext={ColorModeContext} />
             <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open Profile Settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
