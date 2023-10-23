@@ -14,7 +14,7 @@ export const ThemeToggle = (props: ThemeToggleButtonProps) => {
   const colorMode = React.useContext(ColorModeContext);
 
   return (
-    <>
+    <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center'}}>
       {mobileCheck && (
         <Typography>{theme.palette.mode}</Typography>)
       }
@@ -24,7 +24,7 @@ export const ThemeToggle = (props: ThemeToggleButtonProps) => {
         aria-label={theme.palette.mode + ' mode button'} onClick={colorMode.toggleColorMode} color="inherit">
         {theme.palette.mode === 'dark' ? <Brightness7Icon/> : <Brightness4Icon/>}
       </IconButton>
-    </>
+    </div>
   )
 }
 

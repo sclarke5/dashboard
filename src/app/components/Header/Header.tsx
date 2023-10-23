@@ -17,8 +17,6 @@ import AdbIcon from '@mui/icons-material/Adb';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import ThemeToggle from './../ThemeToggle';
 
-const pages = ['Products', 'Pricing', 'Blog'];
-
 export type HeaderProps = {
   ColorModeContext: React.Context<{ toggleColorMode: () => void; }>
   mode: string;
@@ -32,16 +30,8 @@ export const Header = (props: HeaderProps) => {
 
   const { data: session } = useSession();
 
-
-  const handleOpenNavMenu = (event: MouseEvent<HTMLElement>) => {
-    setAnchorElNav(event.currentTarget);
-  };
   const handleOpenUserMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
-  };
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
   };
 
   const handleCloseUserMenu = () => {
@@ -49,7 +39,7 @@ export const Header = (props: HeaderProps) => {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" sx={{mb: '2rem'}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
@@ -71,42 +61,6 @@ export const Header = (props: HeaderProps) => {
             Administar
           </Typography>
 
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: 'block', md: 'none' },
-              }}
-            >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
           <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
           <Typography
             variant="h5"
@@ -124,21 +78,8 @@ export const Header = (props: HeaderProps) => {
               textDecoration: 'none',
             }}
           >
-            Adminstar
+            Administar
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, 
-                  color: mode === 'dark' ? 'white' : 'black',
-                  display: 'block' }}
-              >
-                {page}
-              </Button>
-            ))}
-          </Box>
           <ThemeToggle ColorModeContext={ColorModeContext} />
             <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open Profile Settings">

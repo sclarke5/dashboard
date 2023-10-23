@@ -16,9 +16,9 @@ export const Dashboard = () => {
           <Paper className={styles.dataCard}>xs=4</Paper>
         </Grid>
       </Grid>
-      <Grid xs={12} marginY={2}>
+      {/* <Grid xs={12} marginY={2}>
           <Paper className={styles.dataCard}>xs=8</Paper>
-        </Grid>
+        </Grid> */}
     </Box>
   )
 }
