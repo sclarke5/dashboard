@@ -1,0 +1,1 @@
+export { DataRibbon } from './DataRibbon'

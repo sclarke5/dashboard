@@ -1,0 +1,13 @@
+.dataRibbon {
+  display: grid;
+  text-align: center;
+  grid-template-columns: 1fr;
+
+  @media screen and (min-width: 500px) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @media screen and (min-width: 768px) {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+}

@@ -39,7 +39,7 @@ export const Header = (props: HeaderProps) => {
   };
 
   return (
-    <AppBar position="static" sx={{mb: '2rem'}}>
+    <AppBar position="fixed" sx={{mb: '2rem'}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
@@ -47,7 +47,7 @@ export const Header = (props: HeaderProps) => {
             variant="h6"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
+            href="/"
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
@@ -86,7 +86,7 @@ export const Header = (props: HeaderProps) => {
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar 
                   alt={session?.user?.name as string} 
-                  src={session?.user?.image as string} 
+                  src={session?.user?.image as string}
                   />
               </IconButton>
             </Tooltip>

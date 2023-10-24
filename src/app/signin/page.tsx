@@ -12,11 +12,12 @@ const SignIn = () => {
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center'
+        justifyContent: 'space-evenly',
+        alignItems: 'center',
+        minHeight: '10em',
       }}
     >
-      <h2>{session ? `Welcome, ${session.user?.name}` : "Please log in"}</h2>
+      <h2 className="text-3xl">{session ? `Welcome, ${session.user?.name}` : "Please log in"}</h2>
       <Login />
       
     </Box>

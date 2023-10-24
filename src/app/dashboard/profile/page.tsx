@@ -2,7 +2,7 @@ import React from 'react'
 
 export const Profile = () => {
   return (
-    <h6>Profile</h6>
+    <h6 style={{ marginTop: '5rem' }}>Profile</h6>
   )
 }
 

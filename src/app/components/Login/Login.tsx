@@ -14,7 +14,7 @@ export const Login = () => {
   }
   return (
     <>
-      <Button variant="contained" color="success" onClick={() => signIn()}>Sign in</Button>
+      <Button variant="outlined" color="success" onClick={() => signIn()}>Sign in</Button>
     </>
   )
 }

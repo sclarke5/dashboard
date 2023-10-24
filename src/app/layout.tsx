@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import styles from './Layout.module.scss'
-import { Provider, Sidemenu } from './components'
+import { Footer, Provider, Sidemenu } from './components'
 import { CssBaseline } from '@mui/material'
 
 import ThemeWrapper from './ThemeWrapper'
@@ -22,10 +22,12 @@ export const RootLayout = ({
       <body>
         <Provider>
           <ThemeWrapper>
-            <div className={styles.layout}>
+            <div 
+              className={styles.layout}>
               <Sidemenu />
               <CssBaseline />
               {children}
+              <Footer />
             </div>
           </ThemeWrapper>
         </Provider>

@@ -2,7 +2,7 @@ import React from 'react'
 
 export const Settings = () => {
   return (
-    <h5>Settings</h5>
+    <h6 style={{ marginTop: '5rem' }}>Settings</h6>
   )
 }
 

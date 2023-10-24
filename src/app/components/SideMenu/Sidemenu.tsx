@@ -8,6 +8,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 // import HomeIcon from '@mui/icons-material/Home';
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import Person2Icon from "@mui/icons-material/Person2";
+import HomeIcon from "@mui/icons-material/Home";
 import { Settings } from "@mui/icons-material";
 import { useMediaQuery } from '@mui/material';
 import EqualizerIcon from '@mui/icons-material/Equalizer';
@@ -31,8 +32,13 @@ const drawerWidth = 240;
 
 const menuItems = [
   {
-    route: 'dashboard',
-    text: 'Dashboard',
+    route: '',
+    text: 'Home',
+    icon: <HomeIcon />
+  },
+  {
+    route: 'data',
+    text: 'Data',
     icon: <EqualizerIcon />,
   },
   {
@@ -46,7 +52,7 @@ const menuItems = [
     icon: <Settings />,
   },
   {
-    route: '/',
+    route: '',
     text: 'Sign Out',
     icon: <ExitToAppIcon />,
   }
@@ -138,7 +144,7 @@ export const Sidemenu = () => {
           <List>
             {menuItems.map((item) => {
               return (
-                <Link key={item.text} href={item.route} onClick={() => handleLinkClick(item.text)}>
+                <Link key={item.text} href={`/dashboard/${item.route}`} onClick={() => handleLinkClick(item.text)}>
                   <ListItem disablePadding sx={{ display: 'block' }}>
                     <ListItemButton
                       title={item.text}
@@ -172,3 +178,5 @@ export const Sidemenu = () => {
     return <></>
   }
 }
+
+export default Sidemenu;
