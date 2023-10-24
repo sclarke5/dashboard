@@ -14,7 +14,6 @@ export const Home = () => {
           <Dashboard />
         </>
       )}
-
     </main>
   )
 }

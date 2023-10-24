@@ -167,7 +167,6 @@ export const Sidemenu = () => {
           </List>
         </MuiDrawer>
       </ClickAwayListener>
-
     );
   } else {
     return <></>
