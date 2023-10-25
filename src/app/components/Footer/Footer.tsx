@@ -38,7 +38,7 @@ export const Footer = () => {
             <FooterLink href="/#accessibility">Accessibility Statement</FooterLink>
           </li>
           <Button 
-            variant='text'
+            variant='contained'
             color={session ? 'error' : 'success'}
             onClick={() => (session ? signOut() : signIn())}
           >

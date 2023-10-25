@@ -141,7 +141,7 @@ export const Sidemenu = () => {
           <List>
             {menuItems.map((item) => {
               return (
-                <Link key={item.text} href={`/dashboard/${item.route}`} onClick={() => handleLinkClick(item.text)}>
+                <Link style={{ textDecoration: 'none'}} key={item.text} href={`/dashboard/${item.route}`} onClick={() => handleLinkClick(item.text)}>
                   <ListItem disablePadding sx={{ display: 'block' }}>
                     <ListItemButton
                       title={item.text}
@@ -161,7 +161,10 @@ export const Sidemenu = () => {
                       >
                         {item.icon}
                       </ListItemIcon>
-                      <ListItemText primary={item.text} sx={{ opacity: open ? 1 : 0 }} />
+                      <ListItemText primary={item.text} sx={{ 
+                        opacity: open ? 1 : 0,
+                        color: theme.palette.text.primary
+                      }} />
                     </ListItemButton>
                   </ListItem>
                 </Link>
