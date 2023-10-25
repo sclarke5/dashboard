@@ -14,7 +14,7 @@ export const TransactionsPerDay = (props: any) => {
     <Grid container gap={2} className={styles.wrapper} >
       <Paper className={styles.transactions}>
         <div className={styles.chart}>
-          <Typography>Transactions per Day</Typography>
+          <Typography variant="h5">Transactions per Day</Typography>
           <DataChart data={data} type="line" />
         </div>
         <div className={styles.cardWrapper}>

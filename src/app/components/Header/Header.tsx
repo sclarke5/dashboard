@@ -16,6 +16,8 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import ThemeToggle from './../ThemeToggle';
+import Link from 'next/link';
+import { useTheme } from '@mui/material';
 
 export type HeaderProps = {
   ColorModeContext: React.Context<{ toggleColorMode: () => void; }>
@@ -23,12 +25,13 @@ export type HeaderProps = {
 }
 
 export const Header = (props: HeaderProps) => {
-  const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
   const { ColorModeContext, mode } = props;
 
   const { data: session } = useSession();
+
+  const theme = useTheme();
 
   const handleOpenUserMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
@@ -114,6 +117,20 @@ export const Header = (props: HeaderProps) => {
                   textAlign="center">
                     {session ? 'Sign Out' : 'Sign In'}
                 </Typography>
+              </MenuItem>
+              <MenuItem >
+                <Link 
+                  href='/dashboard/profile'
+                  style={{
+                    color: theme.palette.text.primary,
+                    textDecoration: 'none'
+                  }}  
+                >
+                  <Typography 
+                    textAlign="center">
+                      Profile
+                  </Typography>
+                </Link>
               </MenuItem>
 
             </Menu>

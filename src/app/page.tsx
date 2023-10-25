@@ -1,6 +1,6 @@
 'use client'
 
-import Dashboard from "./dashboard/page";
+import { Dashboard } from "./dashboard/page";
 import { useSession } from "next-auth/react";
 import styles from './Layout.module.scss'
 
