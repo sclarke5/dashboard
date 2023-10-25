@@ -16,15 +16,15 @@ export const lineChartData = {
 }
 
 export const doughnutChartData = {
-  labels: ['Red', 'Blue', 'Yellow'],
+  labels: ['Metric', 'Metric', 'Metric'],
   datasets: [
     {
       label: 'Transaction Dataset',
       data: [300, 50, 100],
       backgroundColor: [
-        "rgb(255, 99, 132)",
-        "rgb(54, 162, 235)",
-        "rgb(255, 205, 86)"
+        "#576574",
+        "#10ac84",
+        "#01a3a4"
       ],
       hoverOffset: 4
     }

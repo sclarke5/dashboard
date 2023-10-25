@@ -1,10 +1,47 @@
 'use client'
 
 import * as React from "react";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, gridClasses, GridToolbar } from "@mui/x-data-grid";
 import LinearProgress from "@mui/material/LinearProgress";
 import { useDemoData } from "@mui/x-data-grid-generator";
-import { Typography } from "@mui/material";
+import { alpha, styled, Typography, useTheme } from "@mui/material";
+
+const ODD_OPACITY = 0.4;
+
+const StripedDataGrid = styled(DataGrid)(({ theme }) => {
+
+  return ({
+  [`& .${gridClasses.row}.odd`]: {
+    backgroundColor: alpha(theme.palette.primary.main, 0.4),
+    '&:hover, &.Mui-hovered': {
+      backgroundColor: alpha(theme.palette.primary.main, ODD_OPACITY),
+      '@media (hover: none)': {
+        backgroundColor: 'transparent',
+      },
+    },
+    '&.Mui-selected': {
+      backgroundColor: alpha(
+        theme.palette.primary.main,
+        ODD_OPACITY + theme.palette.action.selectedOpacity,
+      ),
+      '&:hover, &.Mui-hovered': {
+        backgroundColor: alpha(
+          theme.palette.primary.main,
+          ODD_OPACITY +
+            theme.palette.action.selectedOpacity +
+            theme.palette.action.hoverOpacity,
+        ),
+        // Reset on touch devices, it doesn't add specificity
+        '@media (hover: none)': {
+          backgroundColor: alpha(
+            theme.palette.primary.main,
+            ODD_OPACITY + theme.palette.action.selectedOpacity,
+          ),
+        },
+      },
+    },
+  },
+})});
 
 const Data = () => {
   const { data } = useDemoData({
@@ -12,6 +49,8 @@ const Data = () => {
     rowLength: 500,
     maxColumns: 15,
   });
+
+  const theme = useTheme()
 
   return (
     <>
@@ -29,12 +68,20 @@ const Data = () => {
         deep dive further into the numbers/stats.
       </Typography>
       <div style={{ height: "900px", width: "100%" }}>
-        <DataGrid
+        <StripedDataGrid
           slots={{
             loadingOverlay: LinearProgress,
+            toolbar: GridToolbar
+          }}
+          sx={{
+            border: 0,
+            borderColor: 'transparent'
           }}
           loading={!data}
           {...data}
+          getRowClassName={(params) =>
+            params.indexRelativeToCurrentPage % 2 === 0 ? 'even' : 'odd'
+          }
         />
       </div>
     </>
