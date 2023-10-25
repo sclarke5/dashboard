@@ -2,6 +2,9 @@
   padding: 0 24px 0 88px;
   max-width: 85rem;
   margin: auto;
+  min-height: 92vh;
+  position: relative;
+  padding-bottom: 5rem;
 
   @media screen and (min-width: 1700px) {
     padding: 0 24px 0 0;

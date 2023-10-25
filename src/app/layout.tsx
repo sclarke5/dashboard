@@ -22,14 +22,14 @@ export const RootLayout = ({
       <body>
         <Provider>
           <ThemeWrapper>
-            <div 
-              className={styles.layout}>
+            <div className={styles.layout}>
               <Sidemenu />
               <CssBaseline />
               {children}
               <Footer />
             </div>
           </ThemeWrapper>
+          
         </Provider>
       </body>
     </html>

@@ -23,13 +23,13 @@ export const Footer = () => {
             <FooterLink href="/">Home</FooterLink>
           </li>
           <li>
-            <FooterLink href="/dashboard">Dashboard</FooterLink>
+            <FooterLink href="/dashboard/data">Data</FooterLink>
           </li>
           <li>
-            <FooterLink href="/profile">Profile</FooterLink>
+            <FooterLink href="/dashboard/profile">Profile</FooterLink>
           </li>
           <li>
-            <FooterLink href="/settings">Settings</FooterLink>
+            <FooterLink href="/dashboard/settings">Settings</FooterLink>
           </li>
           <li>
             <FooterLink href="/#terms-and-conditions">Terms & Conditions</FooterLink>
