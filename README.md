@@ -1,3 +1,5 @@
+Built with MaterialUI in order to provide a generic, data-agnostic dashboard that can eventually be integrated into existing projects for data visualization.
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
