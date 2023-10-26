@@ -11,6 +11,14 @@ const ODD_OPACITY = 0.4;
 const StripedDataGrid = styled(DataGrid)(({ theme }) => {
 
   return ({
+  [`& .MuiDataGrid-toolbarContainer`]: {
+    '& .MuiButton-text': {
+      color: theme.palette.mode === 'dark' ? '#fff' : '#000'
+    }
+  },
+  [`& .MuiDataGrid-columnHeaderTitle`]: {
+      fontWeight: 900
+  },
   [`& .${gridClasses.row}.odd`]: {
     backgroundColor: alpha(theme.palette.primary.main, 0.4),
     '&:hover, &.Mui-hovered': {
@@ -50,8 +58,6 @@ const Data = () => {
     maxColumns: 15,
   });
 
-  const theme = useTheme()
-
   return (
     <>
       <Typography 
@@ -67,7 +73,7 @@ const Data = () => {
         This could be a whole section of data that is available for users to
         deep dive further into the numbers/stats.
       </Typography>
-      <div style={{ height: "900px", width: "100%" }}>
+      <div style={{ height: "650px", width: "100%" }}>
         <StripedDataGrid
           slots={{
             loadingOverlay: LinearProgress,

@@ -26,32 +26,34 @@ import {
 import styles from './Sidemenu.module.scss' 
 import Link from 'next/link';
 import { signOut, useSession } from 'next-auth/react';
+import { usePathname } from 'next/navigation';
+import { useRouter } from 'next/router';
 
 const drawerWidth = 240;
 
 const menuItems = [
   {
-    route: '',
+    route: '/',
     text: 'Home',
     icon: <HomeIcon />
   },
   {
-    route: 'data',
+    route: '/dashboard/data',
     text: 'Data',
     icon: <EqualizerIcon />,
   },
   {
-    route: 'profile',
+    route: '/dashboard/profile',
     text: 'Profile',
     icon: <Person2Icon />,
   },
   {
-    route: 'settings',
+    route: '/dashboard/settings',
     text: 'Settings',
     icon: <Settings />,
   },
   {
-    route: '',
+    route: '/signin',
     text: 'Sign Out',
     icon: <ExitToAppIcon />,
   }
@@ -83,6 +85,9 @@ export const Sidemenu = () => {
   const [open, setOpen] = React.useState(false);
   const mobileCheck = useMediaQuery('(min-width: 600px');
   const { data: session } = useSession();
+  const pathname = usePathname();
+
+  console.log('path: ', pathname)
 
 
   const handleDrawerOpen = () => {
@@ -111,13 +116,13 @@ export const Sidemenu = () => {
           onClose={() => handleClickAway}
           variant="permanent" 
           open={open}
-          className='testy'
           sx={{
             width: drawerWidth,
             [`& .MuiDrawer-paper`]: {
               flexShrink: 0,
               whiteSpace: 'nowrap',
               boxSizing: 'border-box',
+              zIndex: 500,
               boxShadow: '5px 5px 5px rgba(0, 0, 0, 0.2)',
               top: mobileCheck ? 64 : 56,
               ...(open && {
@@ -141,15 +146,19 @@ export const Sidemenu = () => {
           <List>
             {menuItems.map((item) => {
               return (
-                <Link style={{ textDecoration: 'none'}} key={item.text} href={`/dashboard/${item.route}`} onClick={() => handleLinkClick(item.text)}>
+                <Link style={{ textDecoration: 'none'}} key={item.text} href={`${item.route}`} onClick={() => handleLinkClick(item.text)}>
                   <ListItem disablePadding sx={{ display: 'block' }}>
                     <ListItemButton
                       title={item.text}
                       aria-label={item.text}
                       sx={{
+                        backgroundColor: pathname === item.route ? theme.palette.primary.main : 'transparent',
                         minHeight: 48,
                         justifyContent: open ? 'initial' : 'center',
                         px: 2.5,
+                        '&:hover': {
+                          backgroundColor: theme.palette.primary.main
+                        } 
                       }}
                     >
                       <ListItemIcon

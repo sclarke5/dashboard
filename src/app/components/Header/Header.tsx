@@ -42,7 +42,7 @@ export const Header = (props: HeaderProps) => {
   };
 
   return (
-    <AppBar position="fixed" sx={{mb: '2rem'}}>
+    <AppBar position="fixed" sx={{mb: '2rem', backgroundColor: theme.palette.primary.main }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />

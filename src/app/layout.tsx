@@ -26,8 +26,8 @@ export const RootLayout = ({
               <Sidemenu />
               <CssBaseline />
               {children}
-              <Footer />
             </div>
+              <Footer />
           </ThemeWrapper>
           
         </Provider>

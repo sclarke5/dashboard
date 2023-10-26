@@ -14,10 +14,15 @@ export const Footer = () => {
   const FooterLink = styled(Link)`
     color: ${theme.palette.text.primary};
   `;
-
+  
   return (
     <footer className={styles.footer}>
-      <Paper sx={{ width: "100%" }} color={'#262626'}>
+      <Paper sx={{ 
+        backgroundColor: theme.palette.primary.main,
+        width: "100%",
+        borderRadius: 0
+        }} 
+        color={'#262626'}>
         <ul role="menu">
           <li>
             <FooterLink href="/">Home</FooterLink>
