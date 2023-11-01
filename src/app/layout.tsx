@@ -1,10 +1,5 @@
 import type { Metadata } from 'next'
-import './globals.css'
-import styles from './Layout.module.scss'
-import { Footer, Provider, Sidemenu } from './components'
-import { CssBaseline } from '@mui/material'
-
-import ThemeWrapper from './ThemeWrapper'
+import AppWrapper from './AppWrapper'
 
 export const metadata: Metadata = {
   title: 'Administar',
@@ -20,17 +15,7 @@ export const RootLayout = ({
   return (
     <html lang="en">
       <body>
-        <Provider>
-          <ThemeWrapper>
-            <div className={styles.layout}>
-              <Sidemenu />
-              <CssBaseline />
-              {children}
-            </div>
-              <Footer />
-          </ThemeWrapper>
-          
-        </Provider>
+        <AppWrapper>{children}</AppWrapper>
       </body>
     </html>
   )

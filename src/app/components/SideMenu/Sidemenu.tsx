@@ -87,9 +87,6 @@ export const Sidemenu = () => {
   const { data: session } = useSession();
   const pathname = usePathname();
 
-  console.log('path: ', pathname)
-
-
   const handleDrawerOpen = () => {
     setOpen(true);
   };

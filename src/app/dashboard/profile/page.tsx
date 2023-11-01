@@ -19,7 +19,7 @@ export const Profile = () => {
 
   const handleSubmit = (ev: FormEvent) => {
     ev.preventDefault();
-    console.log('submitting: ', formData);
+    console.log('submitting data: ', formData);
   }
 
   const handleFormChange = (ev: React.ChangeEvent<HTMLInputElement>) => {

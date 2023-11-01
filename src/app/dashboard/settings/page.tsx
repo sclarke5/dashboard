@@ -1,17 +1,25 @@
 'use client'
 
+import { increment } from '@/app/store/Slices/authSlice';
 import { Box, Button, FormControlLabel, FormGroup, Grid, Switch, Typography } from '@mui/material';
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
 export const Settings = () => {
   const [showRevenue, setShowRevenue] = useState(true);
   const [showProfit, setShowProfit] = useState(true);
   const [showOrders, setShowOrders] = useState(true);
   const [showCustomers, setShowCustomers] = useState(true);
+  const counter = useSelector((state: any) => {
+    return state.authSlice;
+  });
+  const dispatch = useDispatch();
 
   const handleShowRevenueChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
     const { checked } = ev.currentTarget;
     setShowRevenue(checked);
+    dispatch(increment())
+    console.log(counter)
   }
 
   const handleShowProfitChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
@@ -44,6 +52,7 @@ export const Settings = () => {
         }}>Settings</Typography>
       <Box>
         <Typography variant="h4" gutterBottom>Dashboard Features</Typography>
+        <p>{counter}</p>
         <form onSubmit={handleSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12}>

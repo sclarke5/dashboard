@@ -1,5 +1,5 @@
 export { ThemeToggle } from './ThemeToggle';
-export { Provider } from './Provider';
+export { AuthProvider } from './AuthProvider';
 
 export { Header } from './Header';
 export { Footer } from './Footer';
