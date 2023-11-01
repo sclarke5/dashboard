@@ -2,12 +2,24 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const settingsSlice = createSlice({
   name: 'settings',
-  initialState: 0,
+  initialState: {
+    revenue: true,
+    profit: true,
+    orders: true,
+    customers: true,
+  },
   reducers: {
-    increment: (state) => state + 1,
-    decrement: (state) => state - 1,
+    updateSettings: (state, action) => {
+      state.revenue = action.payload.updateSettingsObject.showRevenue;
+      state.customers  = action.payload.updateSettingsObject.showCustomers;
+      state.profit  = action.payload.updateSettingsObject.showProfit;
+      state.orders  = action.payload.updateSettingsObject.showOrders;
+    }
   },
 });
 
-export const { increment, decrement } = settingsSlice.actions;
+export const { 
+  updateSettings
+} = settingsSlice.actions;
+
 export default settingsSlice.reducer;
