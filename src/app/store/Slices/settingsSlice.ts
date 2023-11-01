@@ -10,10 +10,10 @@ const settingsSlice = createSlice({
   },
   reducers: {
     updateSettings: (state, action) => {
-      state.revenue = action.payload.updateSettingsObject.showRevenue;
-      state.customers  = action.payload.updateSettingsObject.showCustomers;
-      state.profit  = action.payload.updateSettingsObject.showProfit;
-      state.orders  = action.payload.updateSettingsObject.showOrders;
+      state.revenue = action.payload.settingsState.showRevenue;
+      state.customers  = action.payload.settingsState.showCustomers;
+      state.profit  = action.payload.settingsState.showProfit;
+      state.orders  = action.payload.settingsState.showOrders;
     }
   },
 });

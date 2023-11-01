@@ -13,42 +13,24 @@ export const Settings = () => {
   })
   const dispatch = useDispatch();
 
-  const [showRevenue, setShowRevenue] = useState(settingsObject.revenue);
-  const [showProfit, setShowProfit] = useState(settingsObject.profit);
-  const [showOrders, setShowOrders] = useState(settingsObject.orders);
-  const [showCustomers, setShowCustomers] = useState(settingsObject.customers);
+  const [settingsState, setSettingsState] = useState({
+    showRevenue: settingsObject.revenue,
+    showProfit: settingsObject.profit,
+    showOrders: settingsObject.orders,
+    showCustomers: settingsObject.customers
+  })
 
-  const handleShowRevenueChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
-    const { checked } = ev.currentTarget;
-    setShowRevenue(checked);
-  }
-
-  const handleShowProfitChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
-    const { checked } = ev.currentTarget;
-    setShowProfit(checked);
-  }
-
-  const handleShowOrdersChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
-    const { checked } = ev.currentTarget;
-    setShowOrders(checked);
-  }
-
-  const handleShowCustomersChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
-    const { checked } = ev.currentTarget;
-    setShowCustomers(checked);
+  const handleSettingToggle = (ev: React.ChangeEvent<HTMLInputElement>) => {
+    const { checked, name } = ev.currentTarget;
+    setSettingsState((prevState) => ({
+      ...prevState,
+      [name]: checked
+    }))
   }
 
   const handleSubmit = (ev: React.FormEvent<HTMLFormElement>) => {
     ev.preventDefault();
-
-    const updateSettingsObject = {
-      showRevenue,
-      showProfit,
-      showOrders,
-      showCustomers
-    }
-    
-    dispatch(updateSettings({updateSettingsObject}))
+    dispatch(updateSettings({ settingsState }))
   }
 
   return (
@@ -69,8 +51,9 @@ export const Settings = () => {
                 <FormControlLabel 
                   control={
                     <Switch 
-                      checked={showRevenue}
-                      onChange={handleShowRevenueChange}
+                      name="showRevenue"
+                      checked={settingsState.showRevenue}
+                      onChange={handleSettingToggle}
                     />
                   }
                   label="Revenue"
@@ -78,8 +61,9 @@ export const Settings = () => {
                 <FormControlLabel 
                   control={
                     <Switch 
-                      checked={showProfit}
-                      onChange={handleShowProfitChange}
+                      name='showProfit'
+                      checked={settingsState.showProfit}
+                      onChange={handleSettingToggle}
                     />
                   }
                   label="Profit"
@@ -87,8 +71,9 @@ export const Settings = () => {
                 <FormControlLabel 
                   control={
                     <Switch 
-                      checked={showOrders}
-                      onChange={handleShowOrdersChange}
+                      name='showOrders'
+                      checked={settingsState.showOrders}
+                      onChange={handleSettingToggle}
                     />
                   }
                   label="Orders"
@@ -96,8 +81,9 @@ export const Settings = () => {
                 <FormControlLabel 
                   control={
                     <Switch 
-                      checked={showCustomers}
-                      onChange={handleShowCustomersChange}
+                      name="showCustomers"
+                      checked={settingsState.showCustomers}
+                      onChange={handleSettingToggle}
                     />
                   }
                   label="Customers"
