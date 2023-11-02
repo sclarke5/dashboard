@@ -1,3 +1,21 @@
+.row {
+  display: flex;
+  justify-content: space-around;
+}
+
+.columnWrapper {
+  width: 20%;
+  min-height: 5rem;
+}
+
+.columnHeader {
+  text-align: center;
+}
+
+.trelloItem {
+  border: 1px solid white;
+}
+
 .modal {
   background-color: #F4F5F7;
   border-radius: 2px;

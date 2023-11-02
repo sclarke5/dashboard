@@ -6,7 +6,7 @@ import { data, statuses } from './trelloData';
 import { DropWrapper } from './DropWrapper';
 import { Column } from './Column';
 import { TrelloItem } from './TrelloItem';
-import styles from '.Projects.module.scss';
+import styles from './Projects.module.scss';
 
 const Projects = () => {
   const [items, setItems] = useState(data);
@@ -43,17 +43,18 @@ const Projects = () => {
       >
         Projects
       </Typography>
-      <div className={"row"}>
+      <div className={styles.row}>
             {statuses.map(s => {
                 return (
-                    <div key={status} className={"col-wrapper"}>
+                    <div key={s.id} className={styles.columnWrapper}>
                         <h2 className={"col-header"}>{s.status.toUpperCase()}</h2>
                         <DropWrapper onDrop={onDrop} status={s.status}>
                             <Column>
-                                {items
-                                    .filter(i => i.status === s.status)
-                                    .map((i, idx) => <TrelloItem key={i.id} item={i} index={idx} moveItem={moveItem} status={s} />)
-                                }
+                              {items
+                                .filter(i => i.status === s.status)
+                                .map((i, idx) => <TrelloItem key={i.id} item={i} index={idx} moveItem={moveItem} status={s} 
+                              />)
+                              }
                             </Column>
                         </DropWrapper>
                     </div>

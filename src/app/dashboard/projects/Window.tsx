@@ -6,6 +6,7 @@ const Window = ({ show, item, onClose }: {
   item: any,
   onClose: any
 }) => {
+  Modal.setAppElement('body')
   return (
     <Modal
       isOpen={show}
@@ -25,7 +26,6 @@ const Window = ({ show, item, onClose }: {
           </p>
         </div>
       </div>
-
     </Modal>
   )
 }

@@ -6,7 +6,7 @@ const Column = ({ isOver, children }: { isOver: boolean, children: any }) => {
 
   return (
     <Box>
-      <Paper sx={{ padding: '1rem 2rem' }} >
+      <Paper sx={{ padding: '1rem 2rem', minHeight: '50vh' }} >
         <div className={`col${className}`}>
           {children}
         </div>
