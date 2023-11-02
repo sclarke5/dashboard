@@ -69,9 +69,7 @@ const Data = () => {
         }}
         >Data</Typography>
       <Typography variant="body1" sx={{ marginBottom: 4 }}>
-        The bestest of data available here at your finger tips in table form.
-        This could be a whole section of data that is available for users to
-        deep dive further into the numbers/stats.
+        Demo "commodities" data to be replaced when pulling data from an API.
       </Typography>
       <div style={{ height: "650px", width: "100%" }}>
         <StripedDataGrid

@@ -1,8 +1,6 @@
 'use client'
 
-import { 
-  updateSettings
-} from '@/app/store/Slices/settingsSlice';
+import { updateSettings } from '@/app/store/Slices/settingsSlice';
 import { Box, Button, FormControlLabel, FormGroup, Grid, Switch, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';

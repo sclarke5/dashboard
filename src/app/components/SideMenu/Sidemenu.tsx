@@ -11,6 +11,7 @@ import HomeIcon from "@mui/icons-material/Home";
 import { Settings } from "@mui/icons-material";
 import { useMediaQuery } from '@mui/material';
 import EqualizerIcon from '@mui/icons-material/Equalizer';
+import CodeIcon from '@mui/icons-material/Code';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 
 import {
@@ -41,6 +42,11 @@ const menuItems = [
     route: '/dashboard/data',
     text: 'Data',
     icon: <EqualizerIcon />,
+  },
+  {
+    route: '/dashboard/projects',
+    text: 'Projects',
+    icon: <CodeIcon />,
   },
   {
     route: '/dashboard/profile',
