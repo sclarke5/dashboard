@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import { useDrag, useDrop } from 'react-dnd';
 import ITEM_TYPE from './types';
 import { Window } from "./Window";
+import styles from './Projects.module.scss'
 
 const TrelloItem = ({ item, index, moveItem, status }: {
   item: any,
@@ -27,9 +28,9 @@ const TrelloItem = ({ item, index, moveItem, status }: {
         return;
       }
 
-      // @ts-ignore
+      //@ts-ignore
       const hoveredRect = ref.current.getBoundingClientRect();
-      const hoverMiddleY = (hoveredRect.bottom - hoveredRect.top / 2);
+      const hoverMiddleY = (hoveredRect.bottom - hoveredRect.top) / 2;
       const mousePosition = monitor.getClientOffset();
       //@ts-ignore
       const hoverClientY = mousePosition.y - hoveredRect.top;
@@ -38,7 +39,7 @@ const TrelloItem = ({ item, index, moveItem, status }: {
         return;
       }
 
-      if(dragIndex > hoverIndex && hoverClientY < hoverMiddleY) {
+      if(dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
         return;
       }
 
@@ -66,14 +67,15 @@ const TrelloItem = ({ item, index, moveItem, status }: {
   return (
      <>
        <div 
-         className="" 
+         className={styles.trelloItem}
          ref={ref} 
          style={{ 
            opacity: isDragging ? 0 : 1 
          }} 
          onClick={onOpen}>
            <div className="color-bar" style={{ 
-             backgroundColor: status.color
+             backgroundColor: status.color,
+             height: '0.5em'
            }}></div>
            <p className="item-title">{item.content}</p>
            <p className='item-status'>{item.icon}</p>
