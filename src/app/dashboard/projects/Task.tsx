@@ -1,18 +1,18 @@
-//@ts-nocheck
 'use client'
 
 import React from 'react'
 import { Box, Grid, Paper, Typography } from '@mui/material';
 import { Draggable } from '@hello-pangea/dnd';
+import { TaskComponentProps } from './types';
 
-export const Task = ({ task, index}) => {
+export const Task = (props: TaskComponentProps) => {
   // logic for disabling drag for tasks goes here
   // const isDragDisabled = true;
 
   return (
     <Draggable 
-      draggableId={task.id} 
-      index={index} 
+      draggableId={props.task.id} 
+      index={props.index} 
       // isDragDisabled={isDragDisabled}
     >
       {(provided, snapshot) => (
@@ -29,7 +29,7 @@ export const Task = ({ task, index}) => {
             backgroundColor: '#000'
           }}
         >
-            {task.content}
+            {props.task.content}
         </Box>
       )}
       

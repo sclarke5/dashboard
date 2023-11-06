@@ -1,15 +1,15 @@
-//@ts-nocheck
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React from 'react';
 import { Box, Grid, Paper, Typography } from '@mui/material';
 import { Draggable, Droppable } from '@hello-pangea/dnd';
+import { ColumnComponentProps, TaskProps } from './types';
 
 import { Task } from './Task';
 
-export const Column = ({ column, tasks, disabledFlag, index }: { column: any, tasks: any }) => {
+export const Column = (props: ColumnComponentProps) => {
   return (
-    <Draggable draggableId={column.id} index={index}>
+    <Draggable draggableId={props.column.id} index={props.index}>
       {(provided) => {
         return (
           <Box 
@@ -28,12 +28,12 @@ export const Column = ({ column, tasks, disabledFlag, index }: { column: any, ta
               }}
               {...provided.dragHandleProps}
               >
-                {column.title}
+                {props.column.title}
             </Typography>
     
             <Droppable 
-              droppableId={column.id} 
-              isDropDisabled={disabledFlag} 
+              droppableId={props.column.id} 
+              isDropDisabled={props.disabledFlag} 
               type="task"
             >
               {(provided) => (
@@ -43,7 +43,7 @@ export const Column = ({ column, tasks, disabledFlag, index }: { column: any, ta
                   {...provided.droppableProps}
                 >
                   <Box sx={{ padding: '1rem' }}>
-                    {tasks.map((task, idx) => {
+                    {props.tasks.map((task: TaskProps, idx: number) => {
                       return <Task key={task.id} task={task} index={idx} />
                     })}
                   </Box>

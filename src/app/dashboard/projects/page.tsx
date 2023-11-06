@@ -1,30 +1,32 @@
-//@ts-nocheck
 'use client'
 
 import { Typography, Container } from "@mui/material"
 import { useState } from "react";
-import { DragDropContext, Droppable } from '@hello-pangea/dnd';
+import { DragDropContext, Droppable, DropResult, DragStart, DragUpdate } from '@hello-pangea/dnd';
 import trelloData from "./trelloData";
-import { Column } from './Column'
+import { Column } from './Column';
+import { ProjectData } from "./types";
 
 const Projects = () => {
-  const [data, setData] = useState(trelloData);
-  const [homeIndex, setHomeIndex] = useState(null);
+  const [data, setData] = useState<ProjectData>(trelloData);
+  const [homeIndex, setHomeIndex] = useState<number>(-1);
 
-  const handleDragStart = (start) => {
+  const handleDragStart = (start: DragStart) => {
+    console.log(start)
     const homeIdx = data.columnOrder.indexOf(start.source.droppableId)
 
     setHomeIndex(homeIdx);
   }
 
-  const handleDragUpdate = (update) => {
+  const handleDragUpdate = (update: DragUpdate) => {
+    console.log('update: ', update)
     // const { destination } = update;
     // const opacity = destination ? destination.index / Object.keys(data.tasks).length : 0;
     // document.body.style.backgroundColor = `rgba(153, 141, 217, ${opacity})`
   }
 
-  const handleDragEnd = (result) => {
-    setHomeIndex(null);
+  const handleDragEnd = (result: DropResult) => {
+    setHomeIndex(-1);
 
     const { destination, source, draggableId, type } = result;
 
@@ -156,17 +158,8 @@ const Projects = () => {
               </Container>
             )
           }}
-        
-
         </Droppable>
-        
-
-        
-
-
       </DragDropContext>
-      
-    
     </>
     
   )
