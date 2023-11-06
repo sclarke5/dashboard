@@ -15,7 +15,8 @@ export const Column = (props: ColumnComponentProps) => {
           <Box 
             sx={{ 
               padding: '2em', 
-              minWidth: '30%' 
+              minWidth: '30%',
+              maxWidth: '30%',
             }}
             {...provided.draggableProps}
             ref={provided.innerRef}
@@ -42,9 +43,17 @@ export const Column = (props: ColumnComponentProps) => {
                   sx={{ minHeight: '25rem' }}
                   {...provided.droppableProps}
                 >
-                  <Box sx={{ padding: '1rem' }}>
+                  <Box sx={{ padding: '1rem', minHeight: '5rem' }}>
                     {props.tasks.map((task: TaskProps, idx: number) => {
-                      return <Task key={task.id} task={task} index={idx} />
+                      return (
+                        <Task 
+                          key={task.id} 
+                          task={task} 
+                          index={idx}
+                          data={props.data} 
+                          setData={props.setData} 
+                        />
+                      )
                     })}
                   </Box>
                   {provided.placeholder}

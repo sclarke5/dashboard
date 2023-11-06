@@ -150,7 +150,9 @@ const Projects = () => {
                       column={column} 
                       tasks={tasks} 
                       disabledFlag={idx > homeIndex + 1 ? true : false} 
-                      index={idx} 
+                      index={idx}
+                      setData={setData}
+                      data={data}
                     />
                   )
                 })}
