@@ -1,18 +1,23 @@
 'use client'
 
-import { Typography, Container } from "@mui/material"
+import { updateProjects } from '@/app/store/Slices/projectsSlice';
+import { Typography, Container, Grid, Button } from "@mui/material"
 import { useState } from "react";
 import { DragDropContext, Droppable, DropResult, DragStart, DragUpdate } from '@hello-pangea/dnd';
-import trelloData from "./trelloData";
 import { Column } from './Column';
 import { ProjectData } from "./types";
+import { useSelector, useDispatch } from "react-redux";
 
 const Projects = () => {
-  const [data, setData] = useState<ProjectData>(trelloData);
+  const projectObject = useSelector((state: any) => {
+    return state.projectsSlice;
+  })
+  const dispatch = useDispatch();
+
+  const [data, setData] = useState<ProjectData>(projectObject);
   const [homeIndex, setHomeIndex] = useState<number>(-1);
 
   const handleDragStart = (start: DragStart) => {
-    console.log(start)
     const homeIdx = data.columnOrder.indexOf(start.source.droppableId)
 
     setHomeIndex(homeIdx);
@@ -109,6 +114,11 @@ const Projects = () => {
 
   }
 
+  const handleSubmit = (ev: React.MouseEvent<HTMLButtonElement>) => {
+    ev.preventDefault();
+    dispatch(updateProjects({ data }))
+  }
+
   return (
     <>
       <Typography  
@@ -162,6 +172,15 @@ const Projects = () => {
           }}
         </Droppable>
       </DragDropContext>
+      <Grid item xs={12} sm={6} style={{ marginTop: '2rem' }}>
+        <Button 
+          onClick={handleSubmit} 
+          variant="contained"
+          color={'primary'}
+          >
+          Save Changes
+        </Button>
+      </Grid>
     </>
     
   )

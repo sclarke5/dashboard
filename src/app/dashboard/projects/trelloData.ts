@@ -9,12 +9,12 @@ const trelloData = {
     'column-1': {
       id: 'column-1',
       title: 'To Do',
-      taskIds: ['task-1', 'task-2', 'task-3', 'task-4'],
+      taskIds: ['task-1', 'task-2', 'task-3'],
     },
     'column-2': {
       id: 'column-2',
       title: 'In Progress',
-      taskIds: [],
+      taskIds: ['task-4'],
     },
     'column-3': {
       id: 'column-3',
