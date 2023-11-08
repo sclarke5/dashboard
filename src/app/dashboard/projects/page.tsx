@@ -123,9 +123,42 @@ const Projects = () => {
     toggleDrawer()
   }
 
+  const addColumn = () => {
+    const columnKey = `column-${Object.keys(data.columns).length + 1}`
+
+    const newcolumnOrder = JSON.parse(JSON.stringify(data.columnOrder))
+
+    newcolumnOrder.push(columnKey);
+
+    const newColumn = {
+      [columnKey]: {
+        id: columnKey,
+        title: 'Review',
+        taskIds: []
+      }
+    }
+
+    const newState = {
+      ...data,
+      columnOrder: newcolumnOrder,
+      columns: {
+        ...data.columns,
+        ...newColumn
+      }
+    }
+
+    setData(newState);
+  }
+
   const handleSubmit = (ev: React.MouseEvent<HTMLButtonElement>) => {
     ev.preventDefault();
     dispatch(updateProjects({ data }));
+  }
+
+  let gridStyling = '';
+
+  for(let i = 0; i < data.columnOrder.length; i++) {
+    gridStyling += '1fr '
   }
 
   return (
@@ -148,6 +181,15 @@ const Projects = () => {
             color={'primary'}
             >
             Add Task
+          </Button>
+        </Grid>
+        <Grid item>
+          <Button 
+            onClick={addColumn} 
+            variant="contained"
+            color={'primary'}
+            >
+            Add Column
           </Button>
         </Grid>
         <Grid item>
@@ -180,7 +222,7 @@ const Projects = () => {
                 sx={{ 
                   display: 'grid', 
                   width: '100%',
-                  gridTemplateColumns: '1fr 1fr 1fr' 
+                  gridTemplateColumns: gridStyling
                 }}
                 >
                 {data.columnOrder.map((colId, idx) => {

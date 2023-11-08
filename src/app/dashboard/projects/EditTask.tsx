@@ -34,7 +34,12 @@ export const EditTask = (props: EditTaskProps) => {
     } else {
       const tasks = Object.keys(data.tasks);
       const taskKey = `task-${tasks.length + 1}`
-      const newTask: any = { [taskKey]: { id: taskKey, content: formData.content } }
+      const newTask: any = { 
+        [taskKey]: { 
+          id: taskKey, 
+          content: formData.content 
+        } 
+      }
 
       const firstColumn = JSON.parse(JSON.stringify(data.columns['column-1']));
       firstColumn.taskIds.push(taskKey);
