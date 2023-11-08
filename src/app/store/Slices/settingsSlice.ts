@@ -1,7 +1,7 @@
 import { loadState, saveState } from '@/app/helper/localStorage';
 import { createSlice } from '@reduxjs/toolkit';
 
-const persistedState = loadState();
+const persistedState = loadState('settings');
 
 const settingsSlice = createSlice({
   name: 'settings',
@@ -18,7 +18,7 @@ const settingsSlice = createSlice({
       state.profit  = action.payload.settingsState.showProfit;
       state.orders  = action.payload.settingsState.showOrders;
 
-      saveState(action.payload.settingsState);
+      saveState('settings', action.payload.settingsState);
     }
   },
 });

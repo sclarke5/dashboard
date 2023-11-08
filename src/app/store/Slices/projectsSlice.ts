@@ -2,14 +2,14 @@ import { createSlice } from '@reduxjs/toolkit';
 import { loadState, saveState } from '@/app/helper/localStorage';
 import trelloData from '@/app/dashboard/projects/trelloData';
 
-const persistedState = loadState();
+const persistedState = loadState('projects');
 
 const projectsSlice = createSlice({
   name: 'projects',
   initialState: {
-    tasks: persistedState ? persistedState.tasks : trelloData.tasks,
-    columns: persistedState ? persistedState.columns : trelloData.columns,
-    columnOrder: persistedState ? persistedState.columnOrder : trelloData.columnOrder
+    tasks: (persistedState && persistedState.tasks) ? persistedState.tasks : trelloData.tasks,
+    columns: (persistedState && persistedState.columns) ? persistedState.columns : trelloData.columns,
+    columnOrder: (persistedState && persistedState.columnOrder) ? persistedState.columnOrder : trelloData.columnOrder
     
   },
   reducers: {
@@ -18,7 +18,7 @@ const projectsSlice = createSlice({
       state.columnOrder = action.payload.data.columnOrder;
       state.tasks = action.payload.data.tasks;
 
-      saveState(action.payload.data);
+      saveState('projects', action.payload.data);
     }
   },
 });

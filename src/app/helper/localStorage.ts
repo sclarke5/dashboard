@@ -1,6 +1,6 @@
-export const loadState = () => {
+export const loadState = (type: string) => {
   try {
-    const serializedState = localStorage.getItem('state');
+    const serializedState = type === 'settings' ? localStorage.getItem('settings') : localStorage.getItem('projects');
     if(serializedState === null) {
       return undefined;
     } 
@@ -12,10 +12,14 @@ export const loadState = () => {
   }
 }
 
-export const saveState = (state: any) => {
+export const saveState = (type: string, state: any) => {
   try {
     const serializedState = JSON.stringify(state);
-    localStorage.setItem('state', serializedState);
+    if(type === 'settings') {
+      localStorage.setItem('settings', serializedState);
+    } else {
+      localStorage.setItem('projects', serializedState);
+    }
   } catch(err) {
     console.log('error: ', err);
   }

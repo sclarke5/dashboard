@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { EditTaskProps, TaskProps } from './types'
 
 export const EditTask = (props: EditTaskProps) => {
-  const [formData, setFormData] = useState(props.task);
+  const [formData, setFormData] = props.task ? useState(props.task) : useState({ id: '', content: '' });
   const setProjectData = props.setData;
   const data = props.data
 
@@ -19,15 +19,40 @@ export const EditTask = (props: EditTaskProps) => {
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
 
-    const newState = {
-      ...data,
-      tasks: {
-        ...data.tasks,
-        [props.task.id]: formData
+    if(props.task) {
+
+      const newState = {
+        ...data,
+        tasks: {
+          ...data.tasks,
+          [props.task.id]: formData
+        }
       }
+      setProjectData(newState)
+      props.toggleDrawer();
+    } else {
+      const tasks = Object.keys(data.tasks);
+      const taskKey = `task-${tasks.length + 1}`
+      const newTask: any = { [taskKey]: { id: taskKey, content: formData.content } }
+
+      const firstColumn = JSON.parse(JSON.stringify(data.columns['column-1']));
+      firstColumn.taskIds.push(taskKey);
+
+      const newState = {
+        ...data,
+        columns: {
+          ...data.columns,
+          'column-1': firstColumn,
+        },
+        tasks: {
+          ...data.tasks,
+          ...newTask
+        }
+      }
+      setProjectData(newState)
+      props.toggleDrawer();
     }
-    setProjectData(newState)
-    props.toggleDrawer();
+
   }
 
   return (
@@ -51,18 +76,8 @@ export const EditTask = (props: EditTaskProps) => {
                   onChange={handleFormChange}
                 />
               </Grid>
-              {/* <Grid item>
-                <TextField 
-                  required
-                  fullWidth
-                  label="Last Name"
-                  name="lastName"
-                  // value={formData.lastName}
-                  onChange={handleFormChange}
-                />
-              </Grid> */}
             </Grid>
-            <Grid item xs={12} sm={6} style={{ marginTop: '2rem' }}>
+            <Grid item>
               <Button 
                 type="submit" 
                 variant="contained"

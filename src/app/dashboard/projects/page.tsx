@@ -1,7 +1,7 @@
 'use client'
 
 import { updateProjects } from '@/app/store/Slices/projectsSlice';
-import { Typography, Container, Grid, Button } from "@mui/material"
+import { Typography, Container, Grid, Button, Drawer } from "@mui/material"
 import { useState } from "react";
 import { DragDropContext, Droppable, DropResult, DragStart, DragUpdate } from '@hello-pangea/dnd';
 import { Column } from './Column';
@@ -20,6 +20,9 @@ const Projects = () => {
   const [homeIndex, setHomeIndex] = useState<number>(-1);
   const [show, setShow] = useState(false);
 
+  const toggleDrawer = () => {
+    setShow(!show);
+  }
 
   const handleDragStart = (start: DragStart) => {
     const homeIdx = data.columnOrder.indexOf(start.source.droppableId)
@@ -28,7 +31,6 @@ const Projects = () => {
   }
 
   const handleDragUpdate = (update: DragUpdate) => {
-    console.log('update: ', update)
     // const { destination } = update;
     // const opacity = destination ? destination.index / Object.keys(data.tasks).length : 0;
     // document.body.style.backgroundColor = `rgba(153, 141, 217, ${opacity})`
@@ -115,12 +117,15 @@ const Projects = () => {
       setData(newState);
       return;
     }
+  }
 
+  const addTask = () => {
+    toggleDrawer()
   }
 
   const handleSubmit = (ev: React.MouseEvent<HTMLButtonElement>) => {
     ev.preventDefault();
-    dispatch(updateProjects({ data }))
+    dispatch(updateProjects({ data }));
   }
 
   return (
@@ -134,6 +139,29 @@ const Projects = () => {
         }}>
           Projects
       </Typography>
+
+      <Grid container spacing={2}>
+        <Grid item>
+          <Button 
+            onClick={addTask} 
+            variant="contained"
+            color={'secondary'}
+            >
+            Add Task
+          </Button>
+        </Grid>
+        <Grid item>
+          <Button 
+            onClick={handleSubmit} 
+            variant="contained"
+            color={'primary'}
+            >
+            Save Changes
+          </Button>
+        </Grid>
+      </Grid>
+      
+
       <DragDropContext
         onDragEnd={handleDragEnd}
         onDragStart={handleDragStart}
@@ -176,15 +204,18 @@ const Projects = () => {
           }}
         </Droppable>
       </DragDropContext>
-      <Grid item xs={12} sm={6} style={{ marginTop: '2rem' }}>
-        <Button 
-          onClick={handleSubmit} 
-          variant="contained"
-          color={'primary'}
-          >
-          Save Changes
-        </Button>
-      </Grid>
+      
+      <Drawer 
+        anchor='right'
+        open={show}
+        onClose={toggleDrawer}  
+        >
+        <EditTask 
+          toggleDrawer={toggleDrawer}
+          setData={setData}
+          data={data}
+        />
+      </Drawer>
     </ClientOnly>
   )
 }
