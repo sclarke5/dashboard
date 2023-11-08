@@ -6,7 +6,6 @@ import React, { FormEvent, useState } from 'react'
 
 const Profile = () => {
   const { data: session } = useSession();
-  const theme = useTheme()
 
   const names = session?.user?.name?.split(' ');
 
@@ -43,7 +42,7 @@ const Profile = () => {
         <Typography variant='h4' sx={{ paddingBottom: 4 }}>
           Hey {session ? session?.user?.name : 'User'}, welcome to your profile 
         </Typography>
-        <Paper sx={{ padding: '1rem 2rem' }} >
+        <Paper sx={{ padding: '3rem 3rem' }} >
           <Grid container justifyContent='center'>
             <Grid item xs={12} sm={10} md={10}>
               <Box display='flex' flexDirection='column' alignItems='center'>
@@ -51,7 +50,7 @@ const Profile = () => {
                   sx={{
                     height: 100,
                     width: 100,
-                    marginBottom: 2,
+                    marginBottom: 5,
                   }}
                   src={session?.user?.image as string}
                 />
@@ -96,7 +95,7 @@ const Profile = () => {
                   <Button 
                     type="submit" 
                     variant="contained"
-                    color={'primary'}
+                    color={'success'}
                     >
                     Save Changes
                   </Button>

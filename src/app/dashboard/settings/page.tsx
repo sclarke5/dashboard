@@ -93,7 +93,7 @@ const Settings = () => {
               <Button 
                 type="submit" 
                 variant="contained"
-                color={'primary'}
+                color={'success'}
                 >
                 Save Changes
               </Button>

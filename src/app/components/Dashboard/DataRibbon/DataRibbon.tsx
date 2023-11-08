@@ -8,7 +8,7 @@ export const DataRibbon = () => {
     {
       title: 'Total Sales',
       description: 'Total sales of all Administar products in the current financial year',
-      value: '1134'
+      value: '1,134'
     },
     {
       title: 'Monthly Profit',
@@ -18,7 +18,7 @@ export const DataRibbon = () => {
     {
       title: 'Net Profit',
       description: 'Total conversions for the month',
-      value: '$30054.56'
+      value: '$3,0054.56'
     },
     {
       title: 'Conversions Rate',
@@ -26,9 +26,16 @@ export const DataRibbon = () => {
       value: '0.61%'
     },
   ]
+
   return (
     <>
-      <Typography fontSize={30}>Data Ribbon</Typography>
+      <Typography  
+        variant='h2' 
+        sx={{ 
+          marginTop: 10, 
+          marginBottom: -3,
+          fontWeight: 600
+        }}>Dashboard</Typography>
       <Grid container gap={2} className={styles.dataRibbon}>
         {dataObjects.map((obj, idx) => {
           return (

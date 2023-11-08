@@ -10,7 +10,7 @@ const Dashboard = () => {
 
   return (
     <Box>
-      <Grid container gap={4} marginTop={2}>
+      <Grid container gap={4}>
         <DataRibbon />
         
         <TransactionsPerDay data={lineChartData} />        
