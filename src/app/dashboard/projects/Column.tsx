@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react';
-import { Box, Grid, Paper, Typography } from '@mui/material';
+import { Box, Paper, Typography } from '@mui/material';
 import { Draggable, Droppable } from '@hello-pangea/dnd';
 import { ColumnComponentProps, TaskProps } from './types';
 
@@ -14,8 +14,7 @@ export const Column = (props: ColumnComponentProps) => {
         return (
           <Box 
             sx={{ 
-              padding: '2em', 
-              width: '30%'
+              padding: '2em'
             }}
             {...provided.draggableProps}
             ref={provided.innerRef}
@@ -39,10 +38,10 @@ export const Column = (props: ColumnComponentProps) => {
               {(provided) => (
                 <Paper 
                   ref={provided.innerRef}
-                  sx={{ minHeight: '25rem' }}
+                  sx={{ minHeight: '25rem', padding: '1rem' }}
                   {...provided.droppableProps}
                 >
-                  <Box sx={{ padding: '1rem', minHeight: '5rem' }}>
+                  <Box>
                     {props.tasks.map((task: TaskProps, idx: number) => {
                       return (
                         <Task 

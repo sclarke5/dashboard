@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react';
-import { Box, Grid, Paper, Typography, Drawer } from '@mui/material';
+import { Box, Typography, Drawer, useTheme } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import { Draggable } from '@hello-pangea/dnd';
 import { TaskComponentProps } from './types';
@@ -15,6 +15,8 @@ export const Task = (props: TaskComponentProps) => {
   const toggleDrawer = () => {
     setOpenDrawer(!openDrawer);
   }
+
+  const theme = useTheme();
 
   return (
     <Draggable 
@@ -32,10 +34,9 @@ export const Task = (props: TaskComponentProps) => {
             justifyContent: 'space-between',
             display: 'flex',
             padding: '1rem',
-            border: '1px solid red',
             marginBottom: '1rem',
             borderRadius: '3px',
-            backgroundColor: '#000'
+            backgroundColor: theme.palette.primary.light
           }}
         >
           <Typography>

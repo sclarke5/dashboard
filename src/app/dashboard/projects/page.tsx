@@ -145,7 +145,7 @@ const Projects = () => {
           <Button 
             onClick={addTask} 
             variant="contained"
-            color={'secondary'}
+            color={'primary'}
             >
             Add Task
           </Button>
@@ -154,7 +154,7 @@ const Projects = () => {
           <Button 
             onClick={handleSubmit} 
             variant="contained"
-            color={'primary'}
+            color={'success'}
             >
             Save Changes
           </Button>
@@ -178,9 +178,9 @@ const Projects = () => {
                 {...provided.droppableProps}
                 ref={provided.innerRef}
                 sx={{ 
-                  display: 'flex', 
+                  display: 'grid', 
                   width: '100%',
-                  justifyContent: 'space-around' 
+                  gridTemplateColumns: '1fr 1fr 1fr' 
                 }}
                 >
                 {data.columnOrder.map((colId, idx) => {
