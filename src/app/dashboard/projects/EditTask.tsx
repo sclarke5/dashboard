@@ -1,9 +1,9 @@
 import { Box, Button, Grid, Paper, TextField, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { EditTaskProps, TaskProps } from './types'
 
 export const EditTask = (props: EditTaskProps) => {
-  const [formData, setFormData] = props.task ? useState(props.task) : useState({ id: '', content: '' });
+  const [formData, setFormData] = useState({ id: '', content: '' });
   const setProjectData = props.setData;
   const data = props.data
 
@@ -20,7 +20,6 @@ export const EditTask = (props: EditTaskProps) => {
     event.preventDefault();
 
     if(props.task) {
-
       const newState = {
         ...data,
         tasks: {
@@ -28,8 +27,10 @@ export const EditTask = (props: EditTaskProps) => {
           [props.task.id]: formData
         }
       }
+
       setProjectData(newState)
       props.toggleDrawer();
+
     } else {
       const tasks = Object.keys(data.tasks);
       const taskKey = `task-${tasks.length + 1}`
@@ -49,11 +50,17 @@ export const EditTask = (props: EditTaskProps) => {
           ...newTask
         }
       }
+
       setProjectData(newState)
       props.toggleDrawer();
     }
-
   }
+
+  useEffect(() => {
+    if(props.task) {
+      setFormData(props.task)
+    }
+  }, [props.task])
 
   return (
     <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>

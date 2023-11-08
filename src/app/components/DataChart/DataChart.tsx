@@ -28,7 +28,7 @@ export const DataChart = (props: ChartConfiguration) => {
         chart.destroy()
       }
     }
-  }, [data])
+  }, [data, options, props, themeOptions])
 
 
   return (

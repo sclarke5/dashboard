@@ -190,5 +190,3 @@ export const Sidemenu = () => {
     return <></>
   }
 }
-
-export default Sidemenu;

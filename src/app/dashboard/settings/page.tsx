@@ -6,7 +6,7 @@ import { Box, Button, FormControlLabel, FormGroup, Grid, Switch, Typography } fr
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-export const Settings = () => {
+const Settings = () => {
   const settingsObject = useSelector((state: any) => {
     return state.settingsSlice;
   })

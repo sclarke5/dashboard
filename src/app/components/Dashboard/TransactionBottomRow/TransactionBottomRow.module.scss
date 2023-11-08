@@ -5,13 +5,13 @@
   grid-template-columns: 1fr;
 
   @media screen and (min-width: 750px) {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr !important;
 
   }
 
 
   @media screen and (min-width: 1200px) {
-      grid-template-columns: 1fr 1fr 1fr 1fr;
+      grid-template-columns: 1fr 1fr 1fr 1fr !important;
   }
 }
 

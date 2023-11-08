@@ -1,11 +1,11 @@
 import React from 'react';
-import Sidemenu from './Sidemenu';
+import { Sidemenu } from './Sidemenu';
 
-export default {
-  children: '',
-  title: 'Component/Sidemenu',
-  component: Sidemenu
-}
+// export default {
+//   children: '',
+//   title: 'Component/Sidemenu',
+//   component: Sidemenu
+// }
 
 const Template = (args: any) => {
   return (

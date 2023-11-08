@@ -1,3 +1,5 @@
+'use client'
+
 import { Box, IconButton, Typography, useMediaQuery, useTheme } from '@mui/material';
 import React from 'react'
 import Brightness4Icon from '@mui/icons-material/Brightness4'

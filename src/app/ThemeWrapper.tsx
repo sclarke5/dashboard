@@ -25,7 +25,7 @@ export const ThemeWrapper = ({ children }: any) => {
       createTheme({
         ...darkTheme
       }),
-    [mode],
+    [],
   );
 
   const lightThemeChosen = React.useMemo(
@@ -33,7 +33,7 @@ export const ThemeWrapper = ({ children }: any) => {
       createTheme({
         ...lightTheme
       }),
-    [mode],
+    [],
   );
 
 

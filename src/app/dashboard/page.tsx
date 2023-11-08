@@ -1,10 +1,12 @@
+'use client'
+
 import React from 'react'
 import { Box, Grid, Paper } from '@mui/material';
 import styles from './Dashboard.module.scss'
 import { DataRibbon, TransactionBottomRow, TransactionsPerDay } from '@/app/components';
 import { lineChartData } from '@/app/helper/mockData';
 
-export const Dashboard = () => {
+const Dashboard = () => {
 
   return (
     <Box>

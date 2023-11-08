@@ -1,11 +1,10 @@
 'use client'
 
 import { Avatar, Box, Button, Grid, Paper, TextField, Typography, useTheme } from '@mui/material';
-import { flexbox } from '@mui/system';
 import { useSession } from 'next-auth/react';
 import React, { FormEvent, useState } from 'react'
 
-export const Profile = () => {
+const Profile = () => {
   const { data: session } = useSession();
   const theme = useTheme()
 
