@@ -1,12 +1,15 @@
+import { loadState, saveState } from '@/app/helper/localStorage';
 import { createSlice } from '@reduxjs/toolkit';
+
+const persistedState = loadState();
 
 const settingsSlice = createSlice({
   name: 'settings',
   initialState: {
-    revenue: true,
-    profit: true,
-    orders: true,
-    customers: true,
+    revenue: persistedState ? persistedState.showRevenue : true,
+    profit: persistedState ? persistedState.showProfit : true,
+    orders: persistedState ? persistedState.showOrders : true,
+    customers: persistedState ? persistedState.showCustomers : true,
   },
   reducers: {
     updateSettings: (state, action) => {
@@ -14,6 +17,8 @@ const settingsSlice = createSlice({
       state.customers  = action.payload.settingsState.showCustomers;
       state.profit  = action.payload.settingsState.showProfit;
       state.orders  = action.payload.settingsState.showOrders;
+
+      saveState(action.payload.settingsState);
     }
   },
 });

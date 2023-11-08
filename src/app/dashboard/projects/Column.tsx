@@ -15,8 +15,7 @@ export const Column = (props: ColumnComponentProps) => {
           <Box 
             sx={{ 
               padding: '2em', 
-              minWidth: '30%',
-              maxWidth: '30%',
+              width: '30%'
             }}
             {...provided.draggableProps}
             ref={provided.innerRef}

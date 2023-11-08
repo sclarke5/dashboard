@@ -1,5 +1,6 @@
 'use client'
 
+import ClientOnly from '@/app/clientOnly';
 import { updateSettings } from '@/app/store/Slices/settingsSlice';
 import { Box, Button, FormControlLabel, FormGroup, Grid, Switch, Typography } from '@mui/material';
 import React, { useState } from 'react';
@@ -32,7 +33,7 @@ export const Settings = () => {
   }
 
   return (
-    <>
+    <ClientOnly>
       <Typography  
         variant='h2' 
         sx={{ 
@@ -100,7 +101,7 @@ export const Settings = () => {
           </Grid>
         </form>
       </Box>
-    </>
+    </ClientOnly>
   )
 }
 

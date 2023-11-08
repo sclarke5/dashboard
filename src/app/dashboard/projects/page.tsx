@@ -5,8 +5,10 @@ import { Typography, Container, Grid, Button } from "@mui/material"
 import { useState } from "react";
 import { DragDropContext, Droppable, DropResult, DragStart, DragUpdate } from '@hello-pangea/dnd';
 import { Column } from './Column';
+import { EditTask } from './EditTask';
 import { ProjectData } from "./types";
 import { useSelector, useDispatch } from "react-redux";
+import ClientOnly from '@/app/clientOnly';
 
 const Projects = () => {
   const projectObject = useSelector((state: any) => {
@@ -16,6 +18,8 @@ const Projects = () => {
 
   const [data, setData] = useState<ProjectData>(projectObject);
   const [homeIndex, setHomeIndex] = useState<number>(-1);
+  const [show, setShow] = useState(false);
+
 
   const handleDragStart = (start: DragStart) => {
     const homeIdx = data.columnOrder.indexOf(start.source.droppableId)
@@ -120,7 +124,7 @@ const Projects = () => {
   }
 
   return (
-    <>
+    <ClientOnly>
       <Typography  
         variant='h2' 
         sx={{ 
@@ -181,8 +185,7 @@ const Projects = () => {
           Save Changes
         </Button>
       </Grid>
-    </>
-    
+    </ClientOnly>
   )
 }
 
