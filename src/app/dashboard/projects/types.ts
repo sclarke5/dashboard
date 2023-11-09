@@ -29,6 +29,7 @@ export type TaskComponentProps = {
 
 export type EditTaskProps = {
   task?: TaskProps;
+  currentColumn?: ColumnProps | null;
   toggleDrawer: () => void;
   data: ProjectData;
   setData: Dispatch<SetStateAction<ProjectData>>;
