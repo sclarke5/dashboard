@@ -19,7 +19,6 @@ const Projects = () => {
   const [data, setData] = useState<ProjectData>(projectObject);
   const [homeIndex, setHomeIndex] = useState<number>(-1);
   const [show, setShow] = useState(false);
-  const [currentColumn, setCurrentColumn] = useState(null)
 
   const toggleDrawer = () => {
     setShow(!show);
@@ -120,9 +119,8 @@ const Projects = () => {
     }
   }
 
-  const addTask = (column: any = null) => {
-    setCurrentColumn(column);
-    toggleDrawer();
+  const addTask = () => {
+    toggleDrawer()
   }
 
   const addColumn = () => {
@@ -178,7 +176,7 @@ const Projects = () => {
       <Grid container spacing={2}>
         <Grid item>
           <Button 
-            onClick={() => addTask()}
+            onClick={addTask} 
             variant="contained"
             color={'primary'}
             >
@@ -204,6 +202,7 @@ const Projects = () => {
           </Button>
         </Grid>
       </Grid>
+      
 
       <DragDropContext
         onDragEnd={handleDragEnd}
@@ -230,17 +229,15 @@ const Projects = () => {
                   const column = data.columns[colId];
                   const tasks = column.taskIds.map(taskId => data.tasks[taskId])
                   return (
-                    <div key={column.id}>
-                      <Column 
-                        column={column} 
-                        tasks={tasks} 
-                        disabledFlag={idx > homeIndex + 1 ? true : false} 
-                        index={idx}
-                        setData={setData}
-                        data={data}
-                        addTask={addTask}
-                      />
-                    </div>
+                    <Column 
+                      key={column.id} 
+                      column={column} 
+                      tasks={tasks} 
+                      disabledFlag={idx > homeIndex + 1 ? true : false} 
+                      index={idx}
+                      setData={setData}
+                      data={data}
+                    />
                   )
                 })}
                 {provided.placeholder}
@@ -259,10 +256,8 @@ const Projects = () => {
           toggleDrawer={toggleDrawer}
           setData={setData}
           data={data}
-          currentColumn={currentColumn}
         />
       </Drawer>
-
     </ClientOnly>
   )
 }
