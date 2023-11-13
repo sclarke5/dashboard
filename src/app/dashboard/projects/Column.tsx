@@ -12,6 +12,12 @@ export const Column = (props: ColumnComponentProps) => {
   const [columnName, setColumnName] = useState(props.column.title);
   const { data, setData, column } = props;
 
+  const handleKeyDown = (ev: React.KeyboardEvent<HTMLInputElement>) => {
+    if(ev.key === 'Enter' || ev.key === 'Escape') {
+      ev.currentTarget.blur();
+    }
+  }
+
   const handleColumnNameChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
     setColumnName(ev.currentTarget.value)
   }
@@ -55,6 +61,7 @@ export const Column = (props: ColumnComponentProps) => {
                 onChange={handleColumnNameChange}
                 className={styles.columnInput}
                 onBlur={handleColumnNameUpdate}
+                onKeyDown={handleKeyDown}
               />
 
               <span {...provided.dragHandleProps}>
