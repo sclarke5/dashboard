@@ -19,6 +19,7 @@ const Projects = () => {
   const [data, setData] = useState<ProjectData>(projectObject);
   const [homeIndex, setHomeIndex] = useState<number>(-1);
   const [show, setShow] = useState(false);
+  const [currentColumn, setCurrentColumn] = useState(null);
 
   const toggleDrawer = () => {
     setShow(!show);
@@ -119,8 +120,9 @@ const Projects = () => {
     }
   }
 
-  const addTask = () => {
-    toggleDrawer()
+  const addTask = (column: any = null) => {
+    setCurrentColumn(column);
+    toggleDrawer();
   }
 
   const addColumn = () => {
@@ -237,6 +239,7 @@ const Projects = () => {
                       index={idx}
                       setData={setData}
                       data={data}
+                      addTask={addTask}
                     />
                   )
                 })}
@@ -255,6 +258,7 @@ const Projects = () => {
         <EditTask 
           toggleDrawer={toggleDrawer}
           setData={setData}
+          currentColumn={currentColumn}
           data={data}
         />
       </Drawer>

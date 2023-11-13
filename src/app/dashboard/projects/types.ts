@@ -18,6 +18,7 @@ export type ColumnComponentProps = {
   index: number;
   data: ProjectData;
   setData: Dispatch<SetStateAction<ProjectData>>;
+  addTask: any;
 }
 
 export type TaskComponentProps = {
@@ -29,6 +30,7 @@ export type TaskComponentProps = {
 
 export type EditTaskProps = {
   task?: TaskProps;
+  currentColumn?: ColumnProps | null; 
   toggleDrawer: () => void;
   data: ProjectData;
   setData: Dispatch<SetStateAction<ProjectData>>;

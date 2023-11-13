@@ -5,7 +5,7 @@ import { EditTaskProps, TaskProps } from './types'
 export const EditTask = (props: EditTaskProps) => {
   const [formData, setFormData] = useState({ id: '', content: '' });
   const setProjectData = props.setData;
-  const data = props.data
+  const { data, currentColumn } = props;
 
   const handleFormChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = ev.currentTarget;
@@ -31,6 +31,35 @@ export const EditTask = (props: EditTaskProps) => {
       setProjectData(newState)
       props.toggleDrawer();
 
+    } else if (currentColumn !== null && currentColumn !== undefined) {
+      const tasks = Object.keys(data.tasks);
+      const taskKey = `task-${tasks.length + 1}`
+      const newTask: any = { 
+        [taskKey]: { 
+          id: taskKey, 
+          content: formData.content 
+        } 
+      }
+
+      const firstColumn = JSON.parse(JSON.stringify(data.columns[currentColumn.id]));
+
+      firstColumn.taskIds.push(taskKey);
+
+      const newState = {
+        ...data,
+        columns: {
+          ...data.columns,
+          [currentColumn.id]: firstColumn,
+        },
+        tasks: {
+          ...data.tasks,
+          ...newTask
+        }
+      }
+
+      setProjectData(newState)
+      props.toggleDrawer();
+
     } else {
       const tasks = Object.keys(data.tasks);
       const taskKey = `task-${tasks.length + 1}`
@@ -41,14 +70,16 @@ export const EditTask = (props: EditTaskProps) => {
         } 
       }
 
-      const firstColumn = JSON.parse(JSON.stringify(data.columns['column-1']));
+      const firstOrdered = data.columnOrder[0];
+
+      const firstColumn = JSON.parse(JSON.stringify(data.columns[firstOrdered]));
       firstColumn.taskIds.push(taskKey);
 
       const newState = {
         ...data,
         columns: {
           ...data.columns,
-          'column-1': firstColumn,
+          [firstOrdered]: firstColumn,
         },
         tasks: {
           ...data.tasks,
@@ -80,8 +111,10 @@ export const EditTask = (props: EditTaskProps) => {
             <Grid container spacing={3}>
               <Grid item>
                 <TextField 
+                  onFocus={e => e.currentTarget.select()}
                   required
                   fullWidth
+                  autoFocus
                   label="Content"
                   name="content"
                   value={formData.content}
