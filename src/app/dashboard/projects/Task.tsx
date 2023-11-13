@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { Box, Typography, Drawer, useTheme } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
+import ClearIcon from '@mui/icons-material/Clear';
 import { Draggable } from '@hello-pangea/dnd';
 import { TaskComponentProps } from './types';
 import { EditTask } from './EditTask';
@@ -42,15 +43,30 @@ export const Task = (props: TaskComponentProps) => {
           <Typography>
             {props.task.content}
           </Typography>
-          <EditIcon 
-            onClick={toggleDrawer}
-            sx={{ 
-              marginLeft: '1rem',
-              '&:hover': {
-                cursor: 'pointer'
-              }
-            }}
-          />
+
+          <Box sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between'
+          }}>
+            <EditIcon 
+              onClick={toggleDrawer}
+              sx={{ 
+                '&:hover': {
+                  cursor: 'pointer'
+                }
+              }}
+            />
+            <ClearIcon
+              sx={{
+                marginTop: '1rem',
+                '&:hover': {
+                  cursor: 'pointer'
+                }
+              }}
+            />
+          </Box>
+          
           <Drawer 
             anchor='right'
             open={openDrawer}

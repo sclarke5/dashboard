@@ -18,7 +18,7 @@ export type ColumnComponentProps = {
   index: number;
   data: ProjectData;
   setData: Dispatch<SetStateAction<ProjectData>>;
-  addTask: any;
+  addTask: (column: ColumnProps) => void;
 }
 
 export type TaskComponentProps = {

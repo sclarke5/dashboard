@@ -1,13 +1,38 @@
 'use client'
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Box, Button, Paper, Typography } from '@mui/material';
+import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import { Draggable, Droppable } from '@hello-pangea/dnd';
 import { ColumnComponentProps, TaskProps } from './types';
-
+import styles from './Projects.module.scss';
 import { Task } from './Task';
 
 export const Column = (props: ColumnComponentProps) => {
+  const [columnName, setColumnName] = useState(props.column.title);
+  const { data, setData, column } = props;
+
+  const handleColumnNameChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
+    setColumnName(ev.currentTarget.value)
+  }
+
+  const handleColumnNameUpdate = (ev: React.ChangeEvent<HTMLInputElement>) => {
+    
+    const updatedColumn = JSON.parse(JSON.stringify(data.columns[column.id]));
+    updatedColumn.title = columnName;
+
+    const newState = {
+      ...data,
+      columns: {
+        ...data.columns,
+        [column.id]: updatedColumn
+      }
+    }
+
+    setData(newState);
+
+  }
+
   return (
     <Draggable draggableId={props.column.id} index={props.index}>
       {(provided) => {
@@ -19,16 +44,23 @@ export const Column = (props: ColumnComponentProps) => {
             {...provided.draggableProps}
             ref={provided.innerRef}
           >
-            <Typography 
-              variant='h4'
-              sx={{ 
-                paddingBottom: 4,
-                fontWeight: 600
-              }}
-              {...provided.dragHandleProps}
-              >
-                {props.column.title}
-            </Typography>
+            <Box sx={{ 
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center'
+            }}>
+              <input 
+                {...provided.dragHandleProps}
+                value={columnName}
+                onChange={handleColumnNameChange}
+                className={styles.columnInput}
+                onBlur={handleColumnNameUpdate}
+              />
+
+              <span {...provided.dragHandleProps}>
+                <DragIndicatorIcon />
+              </span>
+            </Box>
     
             <Droppable 
               droppableId={props.column.id} 
