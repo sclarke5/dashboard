@@ -31,7 +31,7 @@ export const EditTask = (props: EditTaskProps) => {
       setProjectData(newState)
       props.toggleDrawer();
 
-    } else if (currentColumn !== null && currentColumn !== undefined) {
+    } else if (currentColumn && currentColumn.id) {
       const tasks = Object.keys(data.tasks);
       const taskKey = `task-${tasks.length + 1}`
       const newTask: any = { 

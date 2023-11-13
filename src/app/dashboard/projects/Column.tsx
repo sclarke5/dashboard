@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { Box, Button, Paper, Typography } from '@mui/material';
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
+import ClearIcon from '@mui/icons-material/Clear';
 import { Draggable, Droppable } from '@hello-pangea/dnd';
 import { ColumnComponentProps, TaskProps } from './types';
 import styles from './Projects.module.scss';
@@ -36,7 +37,25 @@ export const Column = (props: ColumnComponentProps) => {
     }
 
     setData(newState);
+  }
 
+  const handleRemoveColumn = (ev: any) => {
+    const columns = JSON.parse(JSON.stringify(data.columns));
+    const columnOrder = JSON.parse(JSON.stringify(data.columnOrder));
+
+    const idx = columnOrder.indexOf(column.id);
+
+    delete columns[column.id];
+
+    columnOrder.splice(idx, 1);
+    
+    const newState = {
+      ...data,
+      columnOrder,
+      columns
+    }
+
+    setData(newState);
   }
 
   return (
@@ -55,6 +74,9 @@ export const Column = (props: ColumnComponentProps) => {
               justifyContent: 'space-between',
               alignItems: 'center'
             }}>
+              <span {...provided.dragHandleProps}>
+                <DragIndicatorIcon />
+              </span>
               <input 
                 {...provided.dragHandleProps}
                 value={columnName}
@@ -63,9 +85,15 @@ export const Column = (props: ColumnComponentProps) => {
                 onBlur={handleColumnNameUpdate}
                 onKeyDown={handleKeyDown}
               />
-
-              <span {...provided.dragHandleProps}>
-                <DragIndicatorIcon />
+              <span>
+                <ClearIcon
+                  onClick={handleRemoveColumn}
+                  sx={{
+                    '&:hover': {
+                      cursor: 'pointer',
+                    }
+                  }}
+                />
               </span>
             </Box>
     

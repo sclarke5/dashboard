@@ -232,9 +232,9 @@ const Projects = () => {
                   const tasks = column.taskIds.map(taskId => data.tasks[taskId])
                   return (
                     <Column 
-                      key={column.id} 
-                      column={column} 
-                      tasks={tasks} 
+                      key={column.id}
+                      column={column}
+                      tasks={tasks}
                       disabledFlag={idx > homeIndex + 1 ? true : false} 
                       index={idx}
                       setData={setData}
