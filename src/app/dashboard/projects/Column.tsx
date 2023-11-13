@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react';
-import { Box, Paper, Typography } from '@mui/material';
+import { Box, Button, Paper, Typography } from '@mui/material';
 import { Draggable, Droppable } from '@hello-pangea/dnd';
 import { ColumnComponentProps, TaskProps } from './types';
 
@@ -49,13 +49,22 @@ export const Column = (props: ColumnComponentProps) => {
                           task={task} 
                           index={idx}
                           data={props.data} 
-                          setData={props.setData} 
+                          setData={props.setData}
                         />
                       )
                     })}
                   </Box>
                   {provided.placeholder}
+                  <Button 
+                    onClick={() => props.addTask(props.column)} 
+                    variant="contained"
+                    color={'primary'}
+                    sx={{ marginLeft: '2rem' }}
+                  >
+                  Add Task
+                </Button>
                 </Paper> 
+
               )}
             </Droppable>
           </Box>

@@ -238,16 +238,8 @@ const Projects = () => {
                         index={idx}
                         setData={setData}
                         data={data}
+                        addTask={addTask}
                       />
-
-                      <Button 
-                        onClick={() => addTask(column)} 
-                        variant="contained"
-                        color={'primary'}
-                        sx={{ marginLeft: '2rem' }}
-                        >
-                        Add Task
-                      </Button>
                     </div>
                   )
                 })}
