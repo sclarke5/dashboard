@@ -4,7 +4,7 @@ import { updateProjects } from '@/app/store/Slices/projectsSlice';
 import { Typography, Container, Grid, Button, Drawer } from "@mui/material"
 import { useState } from "react";
 import { DragDropContext, Droppable, DropResult, DragStart, DragUpdate } from '@hello-pangea/dnd';
-import { Column, EditTask, ProjectData } from '@/app/components';
+import { Column, EditTask, ProjectData, ProjectsModal } from '@/app/components';
 import { useSelector, useDispatch } from "react-redux";
 import { ClientOnly } from '@/app/components';
 
@@ -16,11 +16,16 @@ const Projects = () => {
 
   const [data, setData] = useState<ProjectData>(projectObject);
   const [homeIndex, setHomeIndex] = useState<number>(-1);
-  const [show, setShow] = useState(false);
+  const [showDrawer, setShowDrawer] = useState(false);
+  const [showModal, setShowModal] = useState(data.projectType ? false : true);
   const [currentColumn, setCurrentColumn] = useState(null);
 
   const toggleDrawer = () => {
-    setShow(!show);
+    setShowDrawer(!showDrawer);
+  }
+
+  const toggleModal = () => {
+    setShowModal(!showModal);
   }
 
   const handleDragStart = (start: DragStart) => {
@@ -208,7 +213,6 @@ const Projects = () => {
           </Button>
         </Grid>
       </Grid>
-      
 
       <DragDropContext
         onDragEnd={handleDragEnd}
@@ -256,7 +260,7 @@ const Projects = () => {
       
       <Drawer 
         anchor='right'
-        open={show}
+        open={showDrawer}
         onClose={toggleDrawer}  
         >
         <EditTask 
@@ -266,6 +270,13 @@ const Projects = () => {
           data={data}
         />
       </Drawer>
+
+      <ProjectsModal
+        data={data}
+        setData={setData}
+        show={showModal}
+        setShow={setShowModal}
+      />
     </ClientOnly>
   )
 }

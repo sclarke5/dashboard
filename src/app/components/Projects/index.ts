@@ -3,3 +3,4 @@ export type { TaskProps, ColumnProps, ColumnComponentProps, TaskComponentProps, 
 export { Column } from './Column';
 export { EditTask } from './EditTask';
 export { Task } from './Task';
+export { ProjectsModal } from './ProjectsModal';

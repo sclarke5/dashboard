@@ -18,6 +18,7 @@
     "@mui/material": "^5.14.14",
     "@mui/x-data-grid": "^6.16.3",
     "@mui/x-data-grid-generator": "^6.16.3",
+    "@react-spring/web": "^9.7.3",
     "@reduxjs/toolkit": "^1.9.7",
     "@types/chart.js": "^2.9.39",
     "chart.js": "^4.4.0",

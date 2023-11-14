@@ -10,5 +10,5 @@ export { ClientOnly } from './clientOnly';
 
 export { DataRibbon, DataCard, TransactionsPerDay, TransactionBottomRow } from './Dashboard';
 
-export { Task, Column, EditTask } from './Projects';
+export { Task, Column, EditTask, ProjectsModal } from './Projects';
 export type { TaskProps, ColumnProps, ColumnComponentProps, TaskComponentProps, EditTaskProps, ProjectData } from './Projects';

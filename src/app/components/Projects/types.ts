@@ -44,11 +44,12 @@ export type ProjectData = {
   columns: {
     [key: string]: ColumnProps;
   }
-  columnOrder: string[],
+  columnOrder: string[];
   archivedTasks: {
     [key: string]: TaskProps;
-  },
+  }
   archivedColumns: {
     [key: string]: ColumnProps;
   }
+  projectType: string | null;
 }

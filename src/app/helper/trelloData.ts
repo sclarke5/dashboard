@@ -24,7 +24,8 @@ const trelloData = {
   },
   columnOrder: ['column-1', 'column-2', 'column-3'],
   archivedColumns: {},
-  archivedTasks: {}
+  archivedTasks: {},
+  projectType: null
 }
 
 export default trelloData;

@@ -12,7 +12,7 @@ const projectsSlice = createSlice({
     columnOrder: (persistedState && persistedState.columnOrder) ? persistedState.columnOrder : trelloData.columnOrder,
     archivedTasks: (persistedState && persistedState.archivedTasks) ? persistedState.archivedTasks : trelloData.archivedTasks,
     archivedColumns: (persistedState && persistedState.archivedColumns) ? persistedState.archivedColumns : trelloData.archivedColumns,
-    
+    projectType: (persistedState && persistedState.projectType) ? persistedState.projectType : trelloData.projectType,
   },
   reducers: {
     updateProjects: (state, action) => {
@@ -21,6 +21,7 @@ const projectsSlice = createSlice({
       state.tasks = action.payload.data.tasks;
       state.archivedColumns = action.payload.data.archivedColumns;
       state.archivedTasks = action.payload.data.archivedTasks;
+      state.projectType = action.payload.data.projectType
 
       saveState('projects', action.payload.data);
     }
