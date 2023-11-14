@@ -9,11 +9,11 @@ export const loadState = (type: string) => {
       serializedState = localStorage.getItem('theme');
     } 
 
-    if(serializedState === null) {
+    if(serializedState === null || serializedState === undefined) {
       return undefined;
-    } 
-
-    return JSON.parse(serializedState);
+    } else {
+      return JSON.parse(serializedState);
+    }
 
   } catch(err) {
     return undefined;
