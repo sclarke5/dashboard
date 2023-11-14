@@ -7,4 +7,12 @@
   width: 100%;
   border: none;
   font-weight: 700;
+
+  &:hover {
+    cursor: auto;
+  }
+
+  &:focus {
+    outline: none;
+  }
 }

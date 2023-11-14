@@ -1,9 +1,9 @@
-import authSlice from './authSlice';
+import themeSlice from './themeSlice';
 import settingsSlice from './settingsSlice';
 import projectsSlice from './projectsSlice';
 
 export { 
-  authSlice,
+  themeSlice,
   settingsSlice,
   projectsSlice
 }

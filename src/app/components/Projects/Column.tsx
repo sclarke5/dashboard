@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react';
-import { Box, Button, Paper, Typography } from '@mui/material';
+import { Box, Button, Paper, Typography, useTheme } from '@mui/material';
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import ClearIcon from '@mui/icons-material/Clear';
 import { Draggable, Droppable } from '@hello-pangea/dnd';
@@ -12,6 +12,8 @@ import { Task } from './Task';
 export const Column = (props: ColumnComponentProps) => {
   const [columnName, setColumnName] = useState(props.column.title);
   const { data, setData, column } = props;
+
+  const theme = useTheme();
 
   const handleKeyDown = (ev: React.KeyboardEvent<HTMLInputElement>) => {
     if(ev.key === 'Enter' || ev.key === 'Escape') {
@@ -86,6 +88,9 @@ export const Column = (props: ColumnComponentProps) => {
                 className={styles.columnInput}
                 onBlur={handleColumnNameUpdate}
                 onKeyDown={handleKeyDown}
+                style={{
+                  color: theme.palette.primary.contrastText
+                }}
               />
               <span>
                 <ClearIcon
