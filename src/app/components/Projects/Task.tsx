@@ -10,6 +10,7 @@ import { EditTask } from './EditTask';
 
 export const Task = (props: TaskComponentProps) => {
   const [openDrawer, setOpenDrawer] = useState(false);
+  const { task, index, removeTask } = props;
   // logic for disabling drag for tasks goes here
   // const isDragDisabled = true;
 
@@ -21,8 +22,8 @@ export const Task = (props: TaskComponentProps) => {
 
   return (
     <Draggable 
-      draggableId={props.task.id} 
-      index={props.index} 
+      draggableId={task.id} 
+      index={index} 
       // isDragDisabled={isDragDisabled}
     >
       {(provided, snapshot) => (
@@ -41,7 +42,7 @@ export const Task = (props: TaskComponentProps) => {
           }}
         >
           <Typography>
-            {props.task.content}
+            {task.content}
           </Typography>
 
           <Box sx={{
@@ -64,6 +65,7 @@ export const Task = (props: TaskComponentProps) => {
                   cursor: 'pointer'
                 }
               }}
+              onClick={() => removeTask(task)}
             />
           </Box>
           
@@ -73,7 +75,7 @@ export const Task = (props: TaskComponentProps) => {
             onClose={toggleDrawer}  
           >
             <EditTask 
-              task={props.task} 
+              task={task} 
               toggleDrawer={toggleDrawer}
               data={props.data} 
               setData={props.setData} 

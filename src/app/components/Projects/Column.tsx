@@ -54,7 +54,39 @@ export const Column = (props: ColumnComponentProps) => {
     const newState = {
       ...data,
       columnOrder,
-      columns
+      columns,
+      archivedColumns: {
+        ...data.archivedColumns,
+        [column.id]: column
+      }
+    }
+
+    setData(newState);
+  }
+
+  const handleRemoveTask = (task: any) => {
+    const tasks = JSON.parse(JSON.stringify(data.tasks));
+    const taskIds = JSON.parse(JSON.stringify(column.taskIds));
+
+    const idx = taskIds.indexOf(task.id);
+
+    taskIds.splice(idx, 1);
+    delete tasks[task.id];
+
+    const newState = {
+      ...data,
+      columns: {
+        ...data.columns,
+        [column.id]: {
+          ...column,
+          taskIds: taskIds
+        }
+      },
+      tasks: tasks,
+      archivedTasks: {
+        ...data.archivedTasks,
+        [task.id]: task
+      }
     }
 
     setData(newState);
@@ -124,7 +156,8 @@ export const Column = (props: ColumnComponentProps) => {
                           task={task} 
                           index={idx}
                           data={props.data} 
-                          setData={props.setData} 
+                          setData={props.setData}
+                          removeTask={handleRemoveTask}
                         />
                       )
                     })}
@@ -132,13 +165,15 @@ export const Column = (props: ColumnComponentProps) => {
                   {provided.placeholder}
                 </Paper> 
                 <Button
-                variant='contained'
-                color='primary'
-                sx={{
-                  marginTop: '1rem'
-                }}
-                onClick={() => props.addTask(props.column)}
-              >Add Task</Button>
+                  variant='contained'
+                  color='primary'
+                  sx={{
+                    marginTop: '1rem'
+                  }}
+                  onClick={() => props.addTask(props.column)}
+                >
+                  Add Task
+                </Button>
               </>
               )}
             </Droppable>

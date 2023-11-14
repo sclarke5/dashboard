@@ -26,6 +26,7 @@ export type TaskComponentProps = {
   index: number;
   data: ProjectData;
   setData: Dispatch<SetStateAction<ProjectData>>;
+  removeTask: any;
 }
 
 export type EditTaskProps = {
@@ -43,5 +44,11 @@ export type ProjectData = {
   columns: {
     [key: string]: ColumnProps;
   }
-  columnOrder: string[]
+  columnOrder: string[],
+  archivedTasks: {
+    [key: string]: TaskProps;
+  },
+  archivedColumns: {
+    [key: string]: ColumnProps;
+  }
 }

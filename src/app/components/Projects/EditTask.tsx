@@ -33,7 +33,15 @@ export const EditTask = (props: EditTaskProps) => {
 
     } else if (currentColumn && currentColumn.id) {
       const tasks = Object.keys(data.tasks);
-      const taskKey = `task-${tasks.length + 1}`
+      
+      let taskKey;
+      if(data.archivedTasks) {
+        const archivedTasks = Object.keys(data.archivedTasks);
+        taskKey = `task-${tasks.length + archivedTasks.length + 1}`
+      } else {
+        taskKey = `task-${tasks.length + 1}`
+      }
+
       const newTask: any = { 
         [taskKey]: { 
           id: taskKey, 
@@ -62,7 +70,15 @@ export const EditTask = (props: EditTaskProps) => {
 
     } else {
       const tasks = Object.keys(data.tasks);
-      const taskKey = `task-${tasks.length + 1}`
+
+      let taskKey;
+      if(data.archivedTasks) {
+        const archivedTasks = Object.keys(data.archivedTasks);
+        taskKey = `task-${tasks.length + archivedTasks.length + 1}`
+      } else {
+        taskKey = `task-${tasks.length + 1}`
+      }
+
       const newTask: any = { 
         [taskKey]: { 
           id: taskKey, 

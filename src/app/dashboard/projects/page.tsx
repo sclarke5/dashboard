@@ -124,7 +124,13 @@ const Projects = () => {
   }
 
   const addColumn = () => {
-    const columnKey = `column-${Object.keys(data.columns).length + 1}`
+    let columnKey;
+    if(data.archivedColumns) {
+      const archivedColumns = Object.keys(data.archivedColumns);
+      columnKey = `column-${Object.keys(data.columns).length + archivedColumns.length + 1}`
+    } else {
+      columnKey = `column-${Object.keys(data.columns).length + 1}`
+    }
 
     const newcolumnOrder = JSON.parse(JSON.stringify(data.columnOrder))
 

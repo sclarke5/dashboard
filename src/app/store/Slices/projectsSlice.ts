@@ -9,7 +9,9 @@ const projectsSlice = createSlice({
   initialState: {
     tasks: (persistedState && persistedState.tasks) ? persistedState.tasks : trelloData.tasks,
     columns: (persistedState && persistedState.columns) ? persistedState.columns : trelloData.columns,
-    columnOrder: (persistedState && persistedState.columnOrder) ? persistedState.columnOrder : trelloData.columnOrder
+    columnOrder: (persistedState && persistedState.columnOrder) ? persistedState.columnOrder : trelloData.columnOrder,
+    archivedTasks: (persistedState && persistedState.archivedTasks) ? persistedState.archivedTasks : trelloData.archivedTasks,
+    archivedColumns: (persistedState && persistedState.archivedColumns) ? persistedState.archivedColumns : trelloData.archivedColumns,
     
   },
   reducers: {
@@ -17,6 +19,8 @@ const projectsSlice = createSlice({
       state.columns = action.payload.data.columns;
       state.columnOrder = action.payload.data.columnOrder;
       state.tasks = action.payload.data.tasks;
+      state.archivedColumns = action.payload.data.archivedColumns;
+      state.archivedTasks = action.payload.data.archivedTasks;
 
       saveState('projects', action.payload.data);
     }
