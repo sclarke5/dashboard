@@ -4,11 +4,9 @@ import { updateProjects } from '@/app/store/Slices/projectsSlice';
 import { Typography, Container, Grid, Button, Drawer } from "@mui/material"
 import { useState } from "react";
 import { DragDropContext, Droppable, DropResult, DragStart, DragUpdate } from '@hello-pangea/dnd';
-import { Column } from './Column';
-import { EditTask } from './EditTask';
-import { ProjectData } from "./types";
+import { Column, EditTask, ProjectData } from '@/app/components';
 import { useSelector, useDispatch } from "react-redux";
-import ClientOnly from '@/app/clientOnly';
+import { ClientOnly } from '@/app/components';
 
 const Projects = () => {
   const projectObject = useSelector((state: any) => {

@@ -1,6 +1,6 @@
-import { Box, Button, Grid, Paper, TextField, Typography } from '@mui/material'
-import React, { useEffect, useState } from 'react'
-import { EditTaskProps, TaskProps } from './types'
+import { Box, Button, Grid, Paper, TextField } from '@mui/material'
+import React, { useEffect, useState } from 'react';
+import { EditTaskProps, TaskProps } from './types';
 
 export const EditTask = (props: EditTaskProps) => {
   const [formData, setFormData] = useState({ id: '', content: '' });

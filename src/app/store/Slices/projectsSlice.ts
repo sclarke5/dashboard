@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { loadState, saveState } from '@/app/helper/localStorage';
-import trelloData from '@/app/dashboard/projects/trelloData';
+import trelloData from '@/app/helper/trelloData';
 
 const persistedState = loadState('projects');
 

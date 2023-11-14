@@ -6,8 +6,9 @@ export { Footer } from './Footer';
 export { Sidemenu } from './SideMenu';
 export { Login } from './Login';
 export { DataChart } from './DataChart';
+export { ClientOnly } from './clientOnly';
 
-export { DataRibbon } from './Dashboard';
-export { DataCard } from './Dashboard';
-export { TransactionsPerDay } from './Dashboard';
-export { TransactionBottomRow } from './Dashboard';
+export { DataRibbon, DataCard, TransactionsPerDay, TransactionBottomRow } from './Dashboard';
+
+export { Task, Column, EditTask } from './Projects';
+export type { TaskProps, ColumnProps, ColumnComponentProps, TaskComponentProps, EditTaskProps, ProjectData } from './Projects';

@@ -1,6 +1,6 @@
 import React from "react";
 
-const ClientOnly = ({ children, ...delegated }: { children: any }) => {
+export const ClientOnly = ({ children, ...delegated }: { children: any }) => {
 
   const [hasMounted, setHasMounted] = React.useState(false);
 
@@ -17,4 +17,4 @@ const ClientOnly = ({ children, ...delegated }: { children: any }) => {
   );
 }
 
-export default ClientOnly
+// export default ClientOnly

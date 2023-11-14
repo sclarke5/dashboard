@@ -79,6 +79,8 @@ export const Column = (props: ColumnComponentProps) => {
               </span>
               <input 
                 {...provided.dragHandleProps}
+                name="columnName"
+                id={`column-name-${column.id}`}
                 value={columnName}
                 onChange={handleColumnNameChange}
                 className={styles.columnInput}

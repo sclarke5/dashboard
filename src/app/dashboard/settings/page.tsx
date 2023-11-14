@@ -1,6 +1,6 @@
 'use client'
 
-import ClientOnly from '@/app/clientOnly';
+import { ClientOnly } from '@/app/components';
 import { updateSettings } from '@/app/store/Slices/settingsSlice';
 import { Box, Button, FormControlLabel, FormGroup, Grid, Switch, Typography } from '@mui/material';
 import React, { useState } from 'react';
