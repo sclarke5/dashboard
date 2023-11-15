@@ -9,7 +9,8 @@ import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import ChecklistIcon from '@mui/icons-material/Checklist';
 import Typography from '@mui/material/Typography';
 import { useSpring, animated } from '@react-spring/web';
-import { Grid } from '@mui/material';
+import { Grid, styled, useTheme } from '@mui/material';
+import styles from './Projects.module.scss';
 
 interface FadeProps {
   children: React.ReactElement;
@@ -57,12 +58,25 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 400,
+  width: '70vw',
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,
   p: 4,
 };
+
+const StyledGridItem = styled(Grid)`
+  ${({ theme }) => `
+  cursor: pointer;
+  transition: ${theme.transitions.create(['color', 'border-color'], {
+    duration: theme.transitions.duration.standard,
+  })};
+  &:hover {
+    color: ${theme.palette.secondary.main};
+    border-color: ${theme.palette.secondary.main};
+  }
+  `}
+`;
 
 export const ProjectsModal = ({ 
   show, 
@@ -78,6 +92,8 @@ export const ProjectsModal = ({
     }
   ) => {
   const handleClose = () => setShow(false);
+
+  const theme = useTheme();
 
   const setProjectType = (ev: React.MouseEvent<HTMLElement>) => {
     const { id } = ev.currentTarget;
@@ -107,64 +123,85 @@ export const ProjectsModal = ({
       >
         <Fade in={show}>
           <Box sx={style}>
-            <Typography id="spring-modal-title" variant="h4" component="h2">
+            <Typography id="spring-modal-title" variant="h4" sx={{ fontWeight: '600' }} component="h2">
               Choose Template
             </Typography>
-            <Typography id="spring-modal-description" variant='subtitle1' sx={{ m: 2 }}>
+            <Typography id="spring-modal-description" variant='subtitle1' sx={{ my: 2 }}>
               Choose from the following templates to generate a project:
             </Typography>
-            <Grid container sx={{ 
+            <Grid container gap={2} sx={{ 
               marginTop: '2rem',
               marginBottom: '2rem',
               width: '100%',
               justifyContent: 'space-around',
-              height: '50%'
+              height: '40%'
               }}
             >
-              <Grid 
+              <StyledGridItem 
                 item 
                 id="project-strict"
                 sx={{
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'center',
+                  border: '4px solid transparent',
+                  width: '40%',
+                  padding: '2rem',
                   alignItems: 'center',
-                  '&:hover': {
-                    cursor: 'pointer',
-                  }
                 }}
                 onClick={setProjectType}
               >
-                <InputIcon sx={{ 
-                  width: '5rem', height: '5rem', marginBottom: '1rem' 
-                  }} 
-                />
-                <Typography variant='body1'>
+                <Typography variant='h6' sx={{ fontWeight: '600' }}>
                   Strict
                 </Typography>
-              </Grid>
-              <Grid 
+                <InputIcon sx={{ 
+                    width: '5rem', 
+                    height: '5rem', 
+                    marginBottom: '1rem',
+                    color: theme.palette.secondary.main
+                  }}
+                />
+                <Typography 
+                  variant='body1'
+                  sx={{ textAlign: 'center' }}  
+                >
+                  Users may only add tasks to the first column; columns may not be added, removed or rearranged
+                </Typography>
+              </StyledGridItem>
+              <StyledGridItem 
                 item 
                 id="project-open"
+                className={styles.modalGridItem}
                 sx={{
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'center',
+                  border: '4px solid transparent',
+                  width: '40%',
+                  padding: '2rem',
                   alignItems: 'center',
-                  '&:hover': {
-                    cursor: 'pointer',
-                  }
                 }}
                 onClick={setProjectType}
               >
-                <AccountTreeIcon 
-                  sx={{ width: '5rem', height: '5rem', marginBottom: '1rem' }}
-                />
-                <Typography variant='body1'>
+                <Typography variant='h6' sx={{ fontWeight: '600' }}>
                   Open
                 </Typography>
-              </Grid>
-              <Grid 
+                <AccountTreeIcon 
+                  sx={{ 
+                    width: '5rem', 
+                    height: '5rem', 
+                    marginBottom: '1rem',
+                    color: theme.palette.secondary.main
+                  }}
+                />
+                <Typography 
+                  variant='body1'
+                  sx={{ textAlign: 'center' }}  
+                >
+                  Users may add tasks to any column; columns may be added, rearranged, and removed as needed
+                </Typography>
+              </StyledGridItem>
+              {/* <Grid 
                 item 
                 id="project-casual"
                 sx={{
@@ -185,7 +222,7 @@ export const ProjectsModal = ({
                 <Typography variant='body1'>
                   Casual
                 </Typography>
-              </Grid>
+              </Grid> */}
             </Grid>
 
           </Box>

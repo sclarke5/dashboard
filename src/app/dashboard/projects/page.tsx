@@ -1,7 +1,8 @@
 'use client'
 
 import { updateProjects } from '@/app/store/Slices/projectsSlice';
-import { Typography, Container, Grid, Button, Drawer } from "@mui/material"
+import { Typography, Container, Grid, Button, Drawer, Tooltip, IconButton, Box } from "@mui/material"
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
 import { useState } from "react";
 import { DragDropContext, Droppable, DropResult, DragStart, DragUpdate } from '@hello-pangea/dnd';
 import { Column, EditTask, ProjectData, ProjectsModal } from '@/app/components';
@@ -178,11 +179,43 @@ const Projects = () => {
         variant='h2' 
         sx={{ 
           marginTop: 10, 
-          paddingBottom: 4,
-          fontWeight: 600
+          paddingBottom: 2,
+          fontWeight: 900
         }}>
           Projects
       </Typography>
+
+      {data.projectType && (
+        <Box sx={{ 
+        display: 'flex', 
+        position: 'relative',
+        width: 'fit-content',
+        }}>
+        <Typography
+          variant='h4'
+          sx={{
+            paddingBottom: 4,
+            fontWeight: 600
+          }}
+        >
+          {data.projectType === 'project-strict' ? 'Strict Workflow' : data.projectType === 'project-open' ? 'Casual Project' : ''}
+        </Typography>
+        <Tooltip 
+          sx={{ position: 'absolute', right: '-2.5rem'}}
+          title={
+            <Typography fontSize={16}>
+              {data.projectType === 'project-strict' ? 'Stricter rules for managing professional projects with tight workflows: tasks may only be added to the first column, and columns may not be added, removed, or rearranged' : 'Looser rules for managing personal or more casual projects: tasks may be added to any column, and columns may be added, removed, and rearranged as needed'}
+            </Typography>
+          }
+        >
+          <IconButton>
+            <InfoOutlinedIcon />
+          </IconButton>
+        </Tooltip>
+      </Box>
+      )}
+
+      
 
       <Grid container spacing={2}>
         <Grid item>
