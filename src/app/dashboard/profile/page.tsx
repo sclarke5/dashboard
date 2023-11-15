@@ -32,14 +32,15 @@ const Profile = () => {
   return (
     <>
       <Typography  
-        variant='h2' 
+        variant='h1' 
         sx={{ 
           marginTop: 10, 
           paddingBottom: 4,
-          fontWeight: 600
+          fontWeight: 600,
+          fontSize: '4rem'
         }}>Profile</Typography>
       <Box>
-        <Typography variant='h4' sx={{ paddingBottom: 4 }}>
+        <Typography variant='h4' sx={{ paddingBottom: 4, fontWeight: 500 }}>
           Hey {session ? session?.user?.name : 'User'}, welcome to your profile 
         </Typography>
         <Paper sx={{ padding: '3rem 3rem' }} >

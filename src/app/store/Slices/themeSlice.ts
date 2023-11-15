@@ -12,7 +12,6 @@ const themeSlice = createSlice({
     toggleTheme: (state) => { 
       if(state.mode === 'dark') {
         state.mode = 'light';
-        console.log('hellow ', state.mode)
         saveState('theme', state.mode)
       } else {
         state.mode = 'dark';

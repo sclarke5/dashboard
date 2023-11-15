@@ -1,4 +1,5 @@
 .columnInput {
+  text-align: center;
   font-size: 1.5rem;
   width: fit-content;
   background-color: transparent;
@@ -7,6 +8,7 @@
   width: 100%;
   border: none;
   font-weight: 700;
+  padding-bottom: 0.6rem;
 
   &:hover {
     cursor: auto;
@@ -15,4 +17,9 @@
   &:focus {
     outline: none;
   }
+}
+
+.columnHeading {
+  text-align: center;
+  font-size: 1.5rem;
 }

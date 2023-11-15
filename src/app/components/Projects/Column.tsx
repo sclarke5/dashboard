@@ -92,6 +92,49 @@ export const Column = (props: ColumnComponentProps) => {
     setData(newState);
   }
 
+  const renderColumnHeading = (provided: any) => {
+    if(data.projectType === 'project-open') {
+      return (
+        <Box sx={{ 
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center'
+        }}>
+          <span {...provided.dragHandleProps}>
+            <DragIndicatorIcon />
+          </span>
+          <input 
+            {...provided.dragHandleProps}
+            name="columnName"
+            id={`column-name-${column.id}`}
+            value={columnName}
+            onChange={handleColumnNameChange}
+            className={styles.columnInput}
+            onBlur={handleColumnNameUpdate}
+            onKeyDown={handleKeyDown}
+            style={{
+              color: theme.palette.primary.contrastText
+            }}
+          />
+          <span>
+            <ClearIcon
+              onClick={handleRemoveColumn}
+              sx={{
+                '&:hover': {
+                  cursor: 'pointer',
+                }
+              }}
+            />
+          </span>
+        </Box>
+      )
+    } else {
+      return (
+        <h3 className={styles.columnHeading}>{columnName}</h3>
+      )
+    }
+  }
+
   return (
     <Draggable draggableId={props.column.id} index={props.index}>
       {(provided) => {
@@ -103,39 +146,7 @@ export const Column = (props: ColumnComponentProps) => {
             {...provided.draggableProps}
             ref={provided.innerRef}
           >
-            <Box sx={{ 
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center'
-            }}>
-              <span {...provided.dragHandleProps}>
-                <DragIndicatorIcon />
-              </span>
-              <input 
-                {...provided.dragHandleProps}
-                name="columnName"
-                id={`column-name-${column.id}`}
-                value={columnName}
-                onChange={handleColumnNameChange}
-                className={styles.columnInput}
-                onBlur={handleColumnNameUpdate}
-                onKeyDown={handleKeyDown}
-                style={{
-                  color: theme.palette.primary.contrastText
-                }}
-              />
-              <span>
-                <ClearIcon
-                  onClick={handleRemoveColumn}
-                  sx={{
-                    '&:hover': {
-                      cursor: 'pointer',
-                    }
-                  }}
-                />
-              </span>
-            </Box>
-    
+            {renderColumnHeading(provided)}
             <Droppable 
               droppableId={props.column.id} 
               isDropDisabled={props.disabledFlag} 
@@ -163,17 +174,19 @@ export const Column = (props: ColumnComponentProps) => {
                     })}
                   </Box>
                   {provided.placeholder}
-                </Paper> 
-                <Button
-                  variant='contained'
-                  color='primary'
-                  sx={{
-                    marginTop: '1rem'
-                  }}
-                  onClick={() => props.addTask(props.column)}
-                >
-                  Add Task
-                </Button>
+                </Paper>
+                {data.projectType && data.projectType === 'project-open' && (
+                  <Button
+                    variant='contained'
+                    color='primary'
+                    sx={{
+                      marginTop: '1rem'
+                    }}
+                    onClick={() => props.addTask(props.column)}
+                  >
+                    Add Task
+                  </Button>
+                )}
               </>
               )}
             </Droppable>

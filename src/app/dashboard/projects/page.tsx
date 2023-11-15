@@ -25,10 +25,6 @@ const Projects = () => {
     setShowDrawer(!showDrawer);
   }
 
-  const toggleModal = () => {
-    setShowModal(!showModal);
-  }
-
   const handleDragStart = (start: DragStart) => {
     const homeIdx = data.columnOrder.indexOf(start.source.droppableId)
 
@@ -176,11 +172,12 @@ const Projects = () => {
   return (
     <ClientOnly>
       <Typography  
-        variant='h2' 
+        variant='h1' 
         sx={{ 
           marginTop: 10, 
           paddingBottom: 2,
-          fontWeight: 900
+          fontWeight: 900,
+          fontSize: '4rem'
         }}>
           Projects
       </Typography>
@@ -217,79 +214,90 @@ const Projects = () => {
 
       
 
-      <Grid container spacing={2}>
-        <Grid item>
-          <Button 
-            onClick={addTask} 
-            variant="contained"
-            color={'primary'}
-            >
-            Add Task
-          </Button>
-        </Grid>
-        <Grid item>
-          <Button 
-            onClick={addColumn} 
-            variant="contained"
-            color={'primary'}
-            >
-            Add Column
-          </Button>
-        </Grid>
-        <Grid item>
-          <Button 
-            onClick={handleSubmit} 
-            variant="contained"
-            color={'success'}
-            >
-            Save Changes
-          </Button>
-        </Grid>
-      </Grid>
+      {data.projectType && (
+        <>
+          <Grid container spacing={2}>
 
-      <DragDropContext
-        onDragEnd={handleDragEnd}
-        onDragStart={handleDragStart}
-        onDragUpdate={handleDragUpdate}
-      >
-        <Droppable 
-          droppableId='all-columns'
-          direction="horizontal" 
-          type="column"
-        >
-          {(provided) => {
-            return (
-              <Container 
-                {...provided.droppableProps}
-                ref={provided.innerRef}
-                sx={{ 
-                  display: 'grid', 
-                  width: '100%',
-                  gridTemplateColumns: gridStyling
-                }}
+            {data.projectType === 'project-strict' && (
+              <Grid item>
+                <Button 
+                  onClick={addTask} 
+                  variant="contained"
+                  color={'primary'}
+                  >
+                  Add Task
+                </Button>
+              </Grid>
+            )}
+        
+            {data.projectType && data.projectType === 'project-open' && (
+              <Grid item>
+                <Button 
+                  onClick={addColumn} 
+                  variant="contained"
+                  color={'primary'}
+                  >
+                  Add Column
+                </Button>
+              </Grid>
+            )}
+        
+            <Grid item>
+              <Button 
+                onClick={handleSubmit} 
+                variant="contained"
+                color={'success'}
                 >
-                {data.columnOrder.map((colId, idx) => {
-                  const column = data.columns[colId];
-                  const tasks = column.taskIds.map(taskId => data.tasks[taskId])
-                  return (
-                    <Column 
-                      key={column.id}
-                      column={column}
-                      tasks={tasks}
-                      disabledFlag={idx > homeIndex + 1 ? true : false} 
-                      index={idx}
-                      setData={setData}
-                      data={data}
-                      addTask={addTask}
-                    />
-                  )
-                })}
-                {provided.placeholder}
-              </Container>
-            )
-          }}
-        </Droppable>
-      </DragDropContext>
+                Save Changes
+              </Button>
+            </Grid>
+          </Grid>
+
+          <DragDropContext
+            onDragEnd={handleDragEnd}
+            onDragStart={handleDragStart}
+            onDragUpdate={handleDragUpdate}
+          >
+            <Droppable 
+              droppableId='all-columns'
+              direction="horizontal" 
+              type="column"
+            >
+              {(provided) => {
+                return (
+                  <Container 
+                    {...provided.droppableProps}
+                    ref={provided.innerRef}
+                    sx={{ 
+                      display: 'grid', 
+                      width: '100%',
+                      gridTemplateColumns: gridStyling
+                    }}
+                    >
+                    {data.columnOrder.map((colId, idx) => {
+                      const column = data.columns[colId];
+                      const tasks = column.taskIds.map(taskId => data.tasks[taskId])
+                      return (
+                        <Column 
+                          key={column.id}
+                          column={column}
+                          tasks={tasks}
+                          disabledFlag={idx > homeIndex + 1 ? true : false} 
+                          index={idx}
+                          setData={setData}
+                          data={data}
+                          addTask={addTask}
+                        />
+                      )
+                    })}
+                    {provided.placeholder}
+                  </Container>
+                )
+              }}
+            </Droppable>
+          </DragDropContext>
+        </>
+      )}
       
       <Drawer 
         anchor='right'
@@ -305,7 +313,6 @@ const Projects = () => {
       </Drawer>
 
       <ProjectsModal
-        data={data}
         setData={setData}
         show={showModal}
         setShow={setShowModal}

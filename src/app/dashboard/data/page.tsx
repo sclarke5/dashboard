@@ -61,11 +61,12 @@ const Data = () => {
   return (
     <>
       <Typography 
-        variant='h2' 
+        variant='h1' 
         sx={{ 
           marginTop: 10, 
           paddingBottom: 4,
-          fontWeight: 600
+          fontWeight: 600,
+          fontSize: '4rem'
         }}
         >Data</Typography>
       <Typography variant="body1" sx={{ marginBottom: 4 }}>

@@ -1,18 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { loadState, saveState } from '@/app/helper/localStorage';
-import trelloData from '@/app/helper/trelloData';
+import { trelloData } from '@/app/helper/trelloData';
 
 const persistedState = loadState('projects');
 
 const projectsSlice = createSlice({
   name: 'projects',
   initialState: {
-    tasks: (persistedState && persistedState.tasks) ? persistedState.tasks : trelloData.tasks,
-    columns: (persistedState && persistedState.columns) ? persistedState.columns : trelloData.columns,
-    columnOrder: (persistedState && persistedState.columnOrder) ? persistedState.columnOrder : trelloData.columnOrder,
-    archivedTasks: (persistedState && persistedState.archivedTasks) ? persistedState.archivedTasks : trelloData.archivedTasks,
-    archivedColumns: (persistedState && persistedState.archivedColumns) ? persistedState.archivedColumns : trelloData.archivedColumns,
-    projectType: (persistedState && persistedState.projectType) ? persistedState.projectType : trelloData.projectType,
+    tasks: (persistedState && persistedState.tasks) ? persistedState.tasks : trelloData.strict.tasks,
+    columns: (persistedState && persistedState.columns) ? persistedState.columns : trelloData.strict.columns,
+    columnOrder: (persistedState && persistedState.columnOrder) ? persistedState.columnOrder : trelloData.strict.columnOrder,
+    archivedTasks: (persistedState && persistedState.archivedTasks) ? persistedState.archivedTasks : trelloData.strict.archivedTasks,
+    archivedColumns: (persistedState && persistedState.archivedColumns) ? persistedState.archivedColumns : trelloData.strict.archivedColumns,
+    projectType: (persistedState && persistedState.projectType) ? persistedState.projectType : trelloData.strict.projectType,
   },
   reducers: {
     updateProjects: (state, action) => {

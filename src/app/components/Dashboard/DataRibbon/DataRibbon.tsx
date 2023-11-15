@@ -30,11 +30,12 @@ export const DataRibbon = () => {
   return (
     <>
       <Typography  
-        variant='h2' 
+        variant='h1' 
         sx={{ 
           marginTop: 10, 
           marginBottom: -3,
-          fontWeight: 600
+          fontWeight: 600,
+          fontSize: '4rem'
         }}>Dashboard</Typography>
       <Grid container gap={2} className={styles.dataRibbon}>
         {dataObjects.map((obj, idx) => {

@@ -11,6 +11,10 @@ import Typography from '@mui/material/Typography';
 import { useSpring, animated } from '@react-spring/web';
 import { Grid, styled, useTheme } from '@mui/material';
 import styles from './Projects.module.scss';
+import { useDispatch } from 'react-redux';
+import { updateProjects } from '@/app/store/Slices/projectsSlice';
+import { trelloData } from '@/app/helper/trelloData';
+
 
 interface FadeProps {
   children: React.ReactElement;
@@ -81,28 +85,35 @@ const StyledGridItem = styled(Grid)`
 export const ProjectsModal = ({ 
   show, 
   setShow, 
-  data, 
   setData 
   }: 
     {
       show: any, 
-      setShow: any, 
-      data: any, 
+      setShow: any,
       setData: any 
     }
   ) => {
   const handleClose = () => setShow(false);
 
   const theme = useTheme();
+  const dispatch = useDispatch();
 
   const setProjectType = (ev: React.MouseEvent<HTMLElement>) => {
     const { id } = ev.currentTarget;
-    const newState = {
-      ...data,
-      projectType: id
-    }
-
-    setData(newState);
+    let data;
+    if(id === 'project-open') {
+      data = {
+        ...trelloData.casual,
+        projectType: id
+      } 
+    } else {
+        data = {
+          ...trelloData.strict,
+          projectType: id
+        }
+      }
+    setData(data);
+    dispatch(updateProjects({ data }))
     handleClose();
   }
 
@@ -112,7 +123,6 @@ export const ProjectsModal = ({
         aria-labelledby="spring-modal-title"
         aria-describedby="spring-modal-description"
         open={show}
-        onClose={handleClose}
         closeAfterTransition
         slots={{ backdrop: Backdrop }}
         slotProps={{
@@ -123,10 +133,10 @@ export const ProjectsModal = ({
       >
         <Fade in={show}>
           <Box sx={style}>
-            <Typography id="spring-modal-title" variant="h4" sx={{ fontWeight: '600' }} component="h2">
+            <Typography id="spring-modal-title" variant="h3" sx={{ fontWeight: '600', textAlign: 'center' }} component="h2">
               Choose Template
             </Typography>
-            <Typography id="spring-modal-description" variant='subtitle1' sx={{ my: 2 }}>
+            <Typography id="spring-modal-description" variant='h5' sx={{ my: 2, textAlign: 'center' }}>
               Choose from the following templates to generate a project:
             </Typography>
             <Grid container gap={2} sx={{ 
