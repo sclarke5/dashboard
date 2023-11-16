@@ -212,8 +212,6 @@ const Projects = () => {
       </Box>
       )}
 
-      
-
       {data.projectType && (
         <>
           <Grid container spacing={2}>

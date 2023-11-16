@@ -141,7 +141,7 @@ export const Column = (props: ColumnComponentProps) => {
         return (
           <Box 
             sx={{ 
-              padding: '2em'
+              padding: '1em'
             }}
             {...provided.draggableProps}
             ref={provided.innerRef}
