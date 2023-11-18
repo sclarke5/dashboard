@@ -9,6 +9,29 @@ const Profile = () => {
 
   const names = session?.user?.name?.split(' ');
 
+  const [testName, setTestName] = useState('');
+  const [testEmail, setTestEmail] = useState('');
+
+  const handleTestSubmit = async(ev: React.FormEvent) => {
+    ev.preventDefault();
+
+    console.log('tests: ', testName, testEmail)
+
+    try {
+      const user = await fetch('/api/users/create', {
+        method: 'POST',
+        body: JSON.stringify({ 
+          name: testName, 
+          email: testEmail 
+        })
+      })
+
+    } catch (err) {
+      console.log('errrrr ', err)
+    }
+
+  }
+
   const [formData, setFormData] = useState({
     firstName: names ? names[0] : '',
     lastName: names ? names[1] : '',
@@ -106,6 +129,23 @@ const Profile = () => {
           </Grid>
         </Paper>
       </Box>
+
+      <form onSubmit={handleTestSubmit}>
+            <input
+                placeholder="Add name"
+                value={testName}
+                onChange={(e) => setTestName(e.target.value)}
+            />
+
+            <input
+                placeholder="Add email"
+                value={testEmail}
+                onChange={(e) => setTestEmail(e.target.value)}
+            />
+
+            <button type="submit">Submit</button>
+        </form>
+
     </>
   )
 }
