@@ -86,7 +86,7 @@ const Profile = () => {
         }}>Profile</Typography>
       <Box>
         <Typography variant='h4' sx={{ paddingBottom: 4, fontWeight: 500 }}>
-          Hey {session ? session?.user?.name : 'User'}, welcome to your profile 
+          Hey {retrievedData ? retrievedData.name : 'User'}, welcome to your profile 
         </Typography>
         <Paper sx={{ padding: '3rem 3rem' }} >
           <Grid container justifyContent='center'>
