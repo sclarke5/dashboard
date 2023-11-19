@@ -2,40 +2,19 @@
 
 import { Avatar, Box, Button, Grid, Paper, TextField, Typography, useTheme } from '@mui/material';
 import { useSession } from 'next-auth/react';
-import React, { FormEvent, useState } from 'react'
+import React, { FormEvent, useEffect, useState } from 'react';
 
 const Profile = () => {
   const { data: session } = useSession();
 
-  const names = session?.user?.name?.split(' ');
-
-  const [testName, setTestName] = useState('');
-  const [testEmail, setTestEmail] = useState('');
-
-  const handleTestSubmit = async(ev: React.FormEvent) => {
-    ev.preventDefault();
-
-    console.log('tests: ', testName, testEmail)
-
-    try {
-      const user = await fetch('/api/users/create', {
-        method: 'POST',
-        body: JSON.stringify({ 
-          name: testName, 
-          email: testEmail 
-        })
-      })
-
-    } catch (err) {
-      console.log('errrrr ', err)
-    }
-
-  }
+  const [retrievedData, setRetrievedData] = useState({
+    name: '',
+    email: ''
+  })
 
   const [formData, setFormData] = useState({
-    firstName: names ? names[0] : '',
-    lastName: names ? names[1] : '',
-    email: session ? session?.user?.email : '',
+    fullName: retrievedData.name,
+    email: retrievedData.email,
   })
 
   const handleSubmit = (ev: FormEvent) => {
@@ -51,6 +30,36 @@ const Profile = () => {
       [name]: value
     }))
   }
+
+  useEffect(() => {
+    const fetchUser = async() => {
+      try {
+        const user = await fetch(`/api/users/${session?.user?.email}`, {
+          method: 'GET',
+        })
+
+        const data = await user.json();
+        console.log('data res: ', data)
+
+        setRetrievedData(data);
+  
+      } catch(err) {
+        console.log('err: ', err)
+      }
+    }
+
+    fetchUser();
+
+
+  }, [session])
+
+  useEffect(() => {
+    setFormData({
+      fullName: retrievedData.name,
+      email: retrievedData.email
+    })
+
+  }, [retrievedData])
 
   return (
     <>
@@ -88,19 +97,9 @@ const Profile = () => {
                     <TextField 
                       required
                       fullWidth
-                      label="First Name"
-                      name="firstName"
-                      value={formData.firstName}
-                      onChange={handleFormChange}
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField 
-                      required
-                      fullWidth
-                      label="Last Name"
-                      name="lastName"
-                      value={formData.lastName}
+                      label="Full Name"
+                      name="fullName"
+                      value={formData.fullName}
                       onChange={handleFormChange}
                     />
                   </Grid>
@@ -129,23 +128,6 @@ const Profile = () => {
           </Grid>
         </Paper>
       </Box>
-
-      <form onSubmit={handleTestSubmit}>
-            <input
-                placeholder="Add name"
-                value={testName}
-                onChange={(e) => setTestName(e.target.value)}
-            />
-
-            <input
-                placeholder="Add email"
-                value={testEmail}
-                onChange={(e) => setTestEmail(e.target.value)}
-            />
-
-            <button type="submit">Submit</button>
-        </form>
-
     </>
   )
 }

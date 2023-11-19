@@ -130,7 +130,13 @@ export const Column = (props: ColumnComponentProps) => {
       )
     } else {
       return (
-        <h3 className={styles.columnHeading}>{columnName}</h3>
+        <Box>
+          <h3 className={styles.columnHeading}>{columnName}</h3>
+          <span {...provided.dragHandleProps}>
+            <DragIndicatorIcon sx={{display: 'none'}} />
+          </span>
+        </Box>
+        
       )
     }
   }
