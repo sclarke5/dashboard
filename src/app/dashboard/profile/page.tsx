@@ -17,9 +17,23 @@ const Profile = () => {
     email: retrievedData.email,
   })
 
-  const handleSubmit = (ev: FormEvent) => {
+  const handleSubmit = async(ev: FormEvent) => {
     ev.preventDefault();
     console.log('submitting data: ', formData);
+
+    try {
+      await fetch(`/api/users/${session?.user?.email}`, {
+        method: 'PATCH',
+        body: JSON.stringify({
+          fullName: formData.fullName,
+          email: formData.email,
+        })
+      })
+
+    } catch(err) {
+      console.log('update user err: ', err)
+    }
+
   }
 
   const handleFormChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
@@ -44,12 +58,11 @@ const Profile = () => {
         setRetrievedData(data);
   
       } catch(err) {
-        console.log('err: ', err)
+        console.log('get user error: ', err)
       }
     }
 
     fetchUser();
-
 
   }, [session])
 
@@ -109,6 +122,7 @@ const Profile = () => {
                       fullWidth
                       label="Email"
                       name="email"
+                      disabled
                       value={formData.email}
                       onChange={handleFormChange}
                     />
