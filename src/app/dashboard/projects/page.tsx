@@ -3,7 +3,7 @@
 import { updateProjects } from '@/app/store/Slices/projectsSlice';
 import { Typography, Container, Grid, Button, Drawer, Tooltip, IconButton, Box } from "@mui/material"
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DragDropContext, Droppable, DropResult, DragStart, DragUpdate } from '@hello-pangea/dnd';
 import { Column, EditTask, ProjectData, ProjectsModal } from '@/app/components';
 import { useSelector, useDispatch } from "react-redux";
@@ -160,6 +160,7 @@ const Projects = () => {
 
   const handleSubmit = (ev: React.MouseEvent<HTMLButtonElement>) => {
     ev.preventDefault();
+    console.log('project data: ', data)
     dispatch(updateProjects({ data }));
   }
 
@@ -168,6 +169,25 @@ const Projects = () => {
   for(let i = 0; i < data.columnOrder.length; i++) {
     gridStyling += '1fr '
   }
+
+  useEffect(() => {
+    const fetchProjects = async() => {
+      try {
+        const projects = await fetch(`/api/users/1/projects`, {
+          method: 'GET',
+        })
+
+        const data = await projects.json();
+        console.log('data: ', data)
+  
+      } catch(err) {
+        console.log('fetch project  err: ', err)
+      }
+    }
+
+    fetchProjects()
+    
+  }, [])
 
   return (
     <ClientOnly>

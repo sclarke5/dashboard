@@ -53,8 +53,6 @@ const Profile = () => {
         })
 
         const data = await user.json();
-        console.log('data res: ', data)
-
         setRetrievedData(data);
   
       } catch(err) {

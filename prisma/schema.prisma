@@ -18,6 +18,11 @@ model Project {
   type String
   userId Int
   user User @relation(fields: [userId], references: [id])
+  columns Json
+  tasks Json
+  archivedColumns Json?
+  archivedTasks Json?
+  columnOrder String[]
 }
 
 datasource db {
