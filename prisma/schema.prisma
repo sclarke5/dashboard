@@ -6,9 +6,18 @@ generator client {
 }
 
 model User {
-  id String @default(cuid()) @id
+  id Int @id @default(autoincrement())
   name String?
   email String @unique
+  projects Project[]
+}
+
+model Project {
+  id Int @id @default(autoincrement())
+  name String
+  type String
+  userId Int
+  user User @relation(fields: [userId], references: [id])
 }
 
 datasource db {
