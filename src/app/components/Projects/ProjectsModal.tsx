@@ -102,6 +102,21 @@ export const ProjectsModal = ({
   const theme = useTheme();
   // const dispatch = useDispatch();
 
+  const loadProject = (ev: React.MouseEvent) => {
+    ev.preventDefault();
+
+    const { id } = ev.currentTarget;
+
+    const projectId = parseInt(id.replace('project-', ''));
+
+    const selectedProject = allProjects.find((proj: any) => {
+      return proj.id === projectId
+    })
+
+    setData(selectedProject);
+    handleClose()
+  }
+
   const setProjectType = async(ev: React.MouseEvent<HTMLElement>) => {
     const { id } = ev.currentTarget;
     let data;
@@ -156,10 +171,10 @@ export const ProjectsModal = ({
         <Fade in={show}>
           <Box sx={style}>
             <Typography id="spring-modal-title" variant="h3" sx={{ fontWeight: '600', textAlign: 'center' }} component="h2">
-              Choose Template
+              {allProjects.length > 1 ? 'Choose Project' : 'Choose Template' }
             </Typography>
             <Typography id="spring-modal-description" variant='h5' sx={{ my: 2, textAlign: 'center' }}>
-              Choose from the following templates to generate a project:
+              {allProjects.length > 1 ? 'Choose from your existing projects' : 'Choose from the following templates to generate a project:' }
             </Typography>
             <Grid container gap={2} sx={{ 
               marginTop: '2rem',
@@ -169,7 +184,9 @@ export const ProjectsModal = ({
               height: '40%'
               }}
             >
-              <StyledGridItem 
+              {allProjects.length === 0 && (
+                <>
+                <StyledGridItem 
                 item 
                 id="project-strict"
                 sx={{
@@ -233,6 +250,49 @@ export const ProjectsModal = ({
                   Users may add tasks to any column; columns may be added, rearranged, and removed as needed
                 </Typography>
               </StyledGridItem>
+                </>
+              )}
+
+              {allProjects.length > 1 && (
+                allProjects.map((project: any) => {
+                  return (
+                    <StyledGridItem
+                      key={project.id} 
+                      item 
+                      id={`project-${project.id}`}
+                      className={styles.modalGridItem}
+                      sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'center',
+                        border: '4px solid transparent',
+                        width: '40%',
+                        padding: '2rem',
+                        alignItems: 'center',
+                      }}
+                      onClick={loadProject}
+                    >
+                      <Typography variant='h6' sx={{ fontWeight: '600' }}>
+                        {project.name}
+                      </Typography>
+                      <AccountTreeIcon 
+                        sx={{ 
+                          width: '5rem', 
+                          height: '5rem', 
+                          marginBottom: '1rem',
+                          color: theme.palette.secondary.main
+                        }}
+                      />
+                      <Typography 
+                        variant='body1'
+                        sx={{ textAlign: 'center' }}  
+                      >
+                        Type: {project.projectType === 'project-strict' ? 'Strict' : 'Casual'}
+                      </Typography>
+                    </StyledGridItem>
+                  )
+                })
+              )}
             </Grid>
           </Box>
         </Fade>

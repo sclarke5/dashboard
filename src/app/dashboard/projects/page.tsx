@@ -11,9 +11,9 @@ import { ClientOnly } from '@/app/components';
 import { useSession } from 'next-auth/react';
 
 const Projects = () => {
-  const projectObject = useSelector((state: any) => {
-    return state.projectsSlice;
-  })
+  // const projectObject = useSelector((state: any) => {
+  //   return state.projectsSlice;
+  // })
   // const dispatch = useDispatch();
 
   const { data: session } = useSession();
@@ -26,7 +26,18 @@ const Projects = () => {
 
   const [allProjects, setAllProjects] = useState([]);
 
-  const [data, setData] = useState<ProjectData>(projectObject);
+  const [data, setData] = useState<ProjectData>(
+    {
+      tasks: {},
+      columns: {},
+      columnOrder: [],
+      archivedTasks: {},
+      archivedColumns: {},
+      projectType: '',
+      name: ''
+    }
+  );
+
   const [homeIndex, setHomeIndex] = useState<number>(-1);
   const [showDrawer, setShowDrawer] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -188,7 +199,7 @@ const Projects = () => {
 
   let gridStyling = '';
 
-  if(data && data.columnOrder.length > 0) {
+  if(data && data.columnOrder && data.columnOrder.length > 0) {
     for(let i = 0; i < data.columnOrder.length; i++) {
       gridStyling += '1fr '
     }
@@ -222,12 +233,12 @@ const Projects = () => {
 
         const data = await projects.json();
       
-
         setAllProjects(data);
-        setData(data[0]);
 
         if(data.length > 1 || data.length < 1) {
           setShowModal(true)
+        } else {
+          setData(data[0]);
         }
   
       } catch(err) {
@@ -238,7 +249,6 @@ const Projects = () => {
     fetchProjects();
 
   }, [currentUser])
-
 
   return (
     <ClientOnly>
