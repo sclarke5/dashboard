@@ -85,20 +85,24 @@ const StyledGridItem = styled(Grid)`
 export const ProjectsModal = ({ 
   show, 
   setShow, 
-  setData 
+  setData,
+  allProjects,
+  currentUser
   }: 
     {
       show: any, 
       setShow: any,
-      setData: any 
+      setData: any,
+      allProjects: any,
+      currentUser: any
     }
   ) => {
   const handleClose = () => setShow(false);
 
   const theme = useTheme();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  const setProjectType = (ev: React.MouseEvent<HTMLElement>) => {
+  const setProjectType = async(ev: React.MouseEvent<HTMLElement>) => {
     const { id } = ev.currentTarget;
     let data;
     if(id === 'project-open') {
@@ -113,8 +117,26 @@ export const ProjectsModal = ({
         }
       }
     setData(data);
-    dispatch(updateProjects({ data }))
+    // dispatch(updateProjects({ data }))
     handleClose();
+
+    const projectData = { 
+      ...data, 
+      userId: currentUser.id,
+      name: 'New Project'
+    }
+
+    try {
+      await fetch(`/api/users/${currentUser.id}/projects`, {
+        method: 'POST',
+        body: JSON.stringify({
+          projectData: projectData
+        })
+      })
+
+    } catch(err) {
+      console.log('create project err: ', err)
+    }
   }
 
   return (
@@ -211,30 +233,7 @@ export const ProjectsModal = ({
                   Users may add tasks to any column; columns may be added, rearranged, and removed as needed
                 </Typography>
               </StyledGridItem>
-              {/* <Grid 
-                item 
-                id="project-casual"
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  '&:hover': {
-                    cursor: 'pointer',
-                  }
-                }}
-                onClick={setProjectType}
-              >
-                <ChecklistIcon sx={{ 
-                  width: '5rem', height: '5rem', marginBottom: '1rem' 
-                  }} 
-                />
-                <Typography variant='body1'>
-                  Casual
-                </Typography>
-              </Grid> */}
             </Grid>
-
           </Box>
         </Fade>
       </Modal>

@@ -14,7 +14,7 @@ const Projects = () => {
   const projectObject = useSelector((state: any) => {
     return state.projectsSlice;
   })
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const { data: session } = useSession();
 
@@ -23,6 +23,8 @@ const Projects = () => {
     email: '',
     name: ''
   })
+
+  const [allProjects, setAllProjects] = useState([]);
 
   const [data, setData] = useState<ProjectData>(projectObject);
   const [homeIndex, setHomeIndex] = useState<number>(-1);
@@ -186,8 +188,10 @@ const Projects = () => {
 
   let gridStyling = '';
 
-  for(let i = 0; i < data.columnOrder.length; i++) {
-    gridStyling += '1fr '
+  if(data && data.columnOrder.length > 0) {
+    for(let i = 0; i < data.columnOrder.length; i++) {
+      gridStyling += '1fr '
+    }
   }
 
   useEffect(() => {
@@ -207,7 +211,7 @@ const Projects = () => {
 
     fetchUser();
     
-  }, [])
+  }, [session])
 
   useEffect(() => {
     const fetchProjects = async() => {
@@ -217,15 +221,21 @@ const Projects = () => {
         })
 
         const data = await projects.json();
+      
 
-        setData(data);
+        setAllProjects(data);
+        setData(data[0]);
+
+        if(data.length > 1 || data.length < 1) {
+          setShowModal(true)
+        }
   
       } catch(err) {
         console.log('fetch project  err: ', err)
       }
     }
 
-    fetchProjects()
+    fetchProjects();
 
   }, [currentUser])
 
@@ -243,7 +253,7 @@ const Projects = () => {
           Projects
       </Typography>
 
-      {data.projectType && (
+      {data && data.projectType && (
         <Box sx={{ 
         display: 'flex', 
         position: 'relative',
@@ -256,7 +266,7 @@ const Projects = () => {
             fontWeight: 600
           }}
         >
-          {data.projectType === 'project-strict' ? 'Strict Workflow' : data.projectType === 'project-open' ? 'Casual Project' : ''}
+          {data.projectType === 'project-strict' ? `${data.name}: Strict Workflow` : `${data.name}: Casual Project`}
         </Typography>
         <Tooltip 
           sx={{ position: 'absolute', right: '-2.5rem'}}
@@ -273,7 +283,7 @@ const Projects = () => {
       </Box>
       )}
 
-      {data.projectType && (
+      {data && data.projectType && (
         <>
           <Grid container spacing={2}>
 
@@ -376,6 +386,8 @@ const Projects = () => {
         setData={setData}
         show={showModal}
         setShow={setShowModal}
+        allProjects={allProjects}
+        currentUser={currentUser}
       />
     </ClientOnly>
   )

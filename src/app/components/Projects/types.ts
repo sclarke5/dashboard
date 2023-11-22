@@ -52,4 +52,5 @@ export type ProjectData = {
     [key: string]: ColumnProps;
   }
   projectType: string | null;
+  name: string;
 }
