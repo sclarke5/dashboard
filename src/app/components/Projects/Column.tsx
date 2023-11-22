@@ -10,8 +10,9 @@ import styles from './Projects.module.scss';
 import { Task } from './Task';
 
 export const Column = (props: ColumnComponentProps) => {
-  const [columnName, setColumnName] = useState(props.column.title);
   const { data, setData, column } = props;
+
+  const [columnName, setColumnName] = useState(column.title)
 
   const theme = useTheme();
 

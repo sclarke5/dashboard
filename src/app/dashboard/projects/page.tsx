@@ -8,12 +8,21 @@ import { DragDropContext, Droppable, DropResult, DragStart, DragUpdate } from '@
 import { Column, EditTask, ProjectData, ProjectsModal } from '@/app/components';
 import { useSelector, useDispatch } from "react-redux";
 import { ClientOnly } from '@/app/components';
+import { useSession } from 'next-auth/react';
 
 const Projects = () => {
   const projectObject = useSelector((state: any) => {
     return state.projectsSlice;
   })
   const dispatch = useDispatch();
+
+  const { data: session } = useSession();
+
+  const [currentUser, setCurrentUser] = useState({
+    id: -1,
+    email: '',
+    name: ''
+  })
 
   const [data, setData] = useState<ProjectData>(projectObject);
   const [homeIndex, setHomeIndex] = useState<number>(-1);
@@ -160,7 +169,6 @@ const Projects = () => {
 
   const handleSubmit = (ev: React.MouseEvent<HTMLButtonElement>) => {
     ev.preventDefault();
-    console.log('project data: ', data)
     dispatch(updateProjects({ data }));
   }
 
@@ -171,14 +179,34 @@ const Projects = () => {
   }
 
   useEffect(() => {
+    const fetchUser = async() => {
+      try {
+        const user = await fetch(`/api/users/${session?.user?.email}`, {
+          method: 'GET',
+        })
+
+        const data = await user.json();
+        setCurrentUser(data)
+  
+      } catch(err) {
+        console.log('get user error: ', err)
+      }
+    }
+
+    fetchUser();
+    
+  }, [])
+
+  useEffect(() => {
     const fetchProjects = async() => {
       try {
-        const projects = await fetch(`/api/users/1/projects`, {
+        const projects = await fetch(`/api/users/${currentUser.id}/projects`, {
           method: 'GET',
         })
 
         const data = await projects.json();
-        console.log('data: ', data)
+
+        setData(data);
   
       } catch(err) {
         console.log('fetch project  err: ', err)
@@ -186,8 +214,9 @@ const Projects = () => {
     }
 
     fetchProjects()
-    
-  }, [])
+
+  }, [currentUser])
+
 
   return (
     <ClientOnly>
@@ -295,6 +324,7 @@ const Projects = () => {
                     {data.columnOrder.map((colId, idx) => {
                       const column = data.columns[colId];
                       const tasks = column.taskIds.map(taskId => data.tasks[taskId])
+
                       return (
                         <Column 
                           key={column.id}
