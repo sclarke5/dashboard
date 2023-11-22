@@ -43,7 +43,4 @@ export const PATCH = async(req, { params }) => {
     console.log('server route err: ', err);
     return new Response('Failed to update user', { status: 500 })
   }
-
-
-
 }

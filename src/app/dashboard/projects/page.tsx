@@ -27,7 +27,7 @@ const Projects = () => {
   const [data, setData] = useState<ProjectData>(projectObject);
   const [homeIndex, setHomeIndex] = useState<number>(-1);
   const [showDrawer, setShowDrawer] = useState(false);
-  const [showModal, setShowModal] = useState(data.projectType ? false : true);
+  const [showModal, setShowModal] = useState(false);
   const [currentColumn, setCurrentColumn] = useState(null);
 
   const toggleDrawer = () => {
@@ -167,9 +167,21 @@ const Projects = () => {
     setData(newState);
   }
 
-  const handleSubmit = (ev: React.MouseEvent<HTMLButtonElement>) => {
+  const handleSubmit = async(ev: React.MouseEvent<HTMLButtonElement>) => {
     ev.preventDefault();
-    dispatch(updateProjects({ data }));
+    // dispatch(updateProjects({ data }));
+
+    try {
+      await fetch(`/api/users/${currentUser.id}/projects`, {
+        method: 'PATCH',
+        body: JSON.stringify({
+          projectData: data
+        })
+      })
+
+    } catch(err) {
+      console.log('update user err: ', err)
+    }
   }
 
   let gridStyling = '';

@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { loadState, saveState } from '@/app/helper/localStorage';
+import { loadState } from '@/app/helper/localStorage';
 import { trelloData } from '@/app/helper/trelloData';
 
 const persistedState = loadState('projects');
@@ -23,7 +23,7 @@ const projectsSlice = createSlice({
       state.archivedTasks = action.payload.data.archivedTasks;
       state.projectType = action.payload.data.projectType
 
-      saveState('projects', action.payload.data);
+      // saveState('projects', action.payload.data);
     }
   },
 });
