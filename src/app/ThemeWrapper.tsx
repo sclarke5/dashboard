@@ -1,12 +1,14 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import { createTheme, ThemeProvider } from '@mui/material'
 import { Header } from './components';
 import darkTheme from './theme/darkTheme';
 import lightTheme from './theme/lightTheme';
 import { useSelector, useDispatch } from 'react-redux';
 import { toggleTheme } from './store/Slices/themeSlice';
+import { useSession } from 'next-auth/react';
+import { updateCurrentUser } from "@/app/store/Slices/userSlice";
 
 export const ThemeWrapper = ({ children }: any) => {
 
@@ -14,6 +16,7 @@ export const ThemeWrapper = ({ children }: any) => {
     return state.themeSlice;
   })
   const dispatch = useDispatch();
+  const { data: session } = useSession();
 
   const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
 
@@ -43,6 +46,28 @@ export const ThemeWrapper = ({ children }: any) => {
       }),
     [],
   );
+
+  useEffect(() => {
+    const fetchUser = async() => {
+      try {
+        const user = await fetch(`/api/users/${session?.user?.email}`, {
+          method: 'GET',
+        })
+  
+        return await user.json();
+  
+      } catch(err) {
+        console.log('get user error: ', err)
+      }
+    }
+
+    if(session) {
+      fetchUser().then((res) => {
+        dispatch(updateCurrentUser(res));
+      });
+    }
+
+  }, [session])
 
 
   return (

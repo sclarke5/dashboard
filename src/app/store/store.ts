@@ -1,12 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
  // Import your reducers
-import { themeSlice, settingsSlice, projectsSlice } from './Slices';
+import { themeSlice, settingsSlice, projectsSlice, userSlice } from './Slices';
 
 const store = configureStore({
   reducer: {
     themeSlice,
     settingsSlice,
-    projectsSlice
+    projectsSlice,
+    userSlice
     // Add more reducers as needed
   },
 });

@@ -8,22 +8,12 @@ import { DragDropContext, Droppable, DropResult, DragStart, DragUpdate } from '@
 import { Column, EditTask, ProjectData, ProjectsModal } from '@/app/components';
 import { useSelector, useDispatch } from "react-redux";
 import { ClientOnly } from '@/app/components';
-import { useSession } from 'next-auth/react';
 
 const Projects = () => {
-  // const projectObject = useSelector((state: any) => {
-  //   return state.projectsSlice;
-  // })
-  // const dispatch = useDispatch();
-
-  const { data: session } = useSession();
-
-  const [currentUser, setCurrentUser] = useState({
-    id: -1,
-    email: '',
-    name: ''
+  const userObject = useSelector((state: any) => {
+    return state.userSlice;
   })
-
+  const [currentUser, setCurrentUser] = useState(userObject);
   const [allProjects, setAllProjects] = useState([]);
 
   const [data, setData] = useState<ProjectData>(
@@ -206,23 +196,8 @@ const Projects = () => {
   }
 
   useEffect(() => {
-    const fetchUser = async() => {
-      try {
-        const user = await fetch(`/api/users/${session?.user?.email}`, {
-          method: 'GET',
-        })
-
-        const data = await user.json();
-        setCurrentUser(data)
-  
-      } catch(err) {
-        console.log('get user error: ', err)
-      }
-    }
-
-    fetchUser();
-    
-  }, [session])
+    setCurrentUser(userObject)
+  }, [userObject])
 
   useEffect(() => {
     const fetchProjects = async() => {
@@ -246,7 +221,9 @@ const Projects = () => {
       }
     }
 
-    fetchProjects();
+    if(currentUser && currentUser.id !== '') {
+      fetchProjects();
+    }
 
   }, [currentUser])
 

@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 export const ClientOnly = ({ children, ...delegated }: { children: any }) => {
 
-  const [hasMounted, setHasMounted] = React.useState(false);
+  const [hasMounted, setHasMounted] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     setHasMounted(true);
   }, []);
 
