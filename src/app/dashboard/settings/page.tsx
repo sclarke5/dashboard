@@ -5,9 +5,10 @@ import { updateSettings } from '@/app/store/Slices/settingsSlice';
 import { Box, Button, FormControlLabel, FormGroup, Grid, Switch, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import type { RootState } from '@/app/store/store';
 
 const Settings = () => {
-  const settingsObject = useSelector((state: any) => {
+  const settingsObject = useSelector((state: RootState) => {
     return state.settingsSlice;
   })
   const dispatch = useDispatch();

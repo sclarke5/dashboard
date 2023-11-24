@@ -1,9 +1,9 @@
-// @ts-nocheck
 import prisma from "@/app/lib/prisma";
+import type { NextApiRequest } from "next";
 
-export const GET = async(req, { params }) => {
+export const GET = async(req: NextApiRequest, { params }: { params: { email: string } }) => {
   try {
-    const user = await prisma.User.findUnique({
+    const user = await prisma.user.findUnique({
       where: {
         email: params.email
       }
@@ -20,7 +20,7 @@ export const GET = async(req, { params }) => {
   }
 }
 
-export const PATCH = async(req, { params }) => {
+export const PATCH = async(req: Request, { params }: {params: { email: string }}) => {
   const { fullName } = await req.json();
 
   try {

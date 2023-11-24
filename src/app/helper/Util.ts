@@ -13,7 +13,7 @@ const MONTHS = [
   "December",
 ];
 
-export const months = (config: any) => {
+export const months = (config: { count: number, section: undefined }) => {
   const cfg = config || {};
   const count = cfg.count || 12;
   const section = cfg.section;

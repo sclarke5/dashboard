@@ -1,9 +1,9 @@
 import { months } from "./Util";
 
-const labels = months({count: 7});
+// const labels = months({count: 7});
 
 export const lineChartData = {
-  labels: months({ count: 12 }),
+  labels: months({ count: 12, section: undefined }),
   datasets: [
     {
       label: "Transactions",

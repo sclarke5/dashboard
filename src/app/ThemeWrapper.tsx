@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect } from 'react'
+import React, { useEffect } from 'react';
 import { createTheme, ThemeProvider } from '@mui/material'
 import { Header } from './components';
 import darkTheme from './theme/darkTheme';
@@ -9,10 +9,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import { toggleTheme } from './store/Slices/themeSlice';
 import { useSession } from 'next-auth/react';
 import { updateCurrentUser } from "@/app/store/Slices/userSlice";
+import type { RootState } from './store/store';
 
-export const ThemeWrapper = ({ children }: any) => {
+export const ThemeWrapper = ({ children }: {children: JSX.Element}) => {
 
-  const theme = useSelector((state: any) => {
+  const theme = useSelector((state: RootState) => {
     return state.themeSlice;
   })
   const dispatch = useDispatch();

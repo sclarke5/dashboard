@@ -25,16 +25,20 @@ const authOptions: NextAuthOptions = {
   callbacks: {
     async signIn({ user }){
       const { name, email } = user;
+
+      if(!email){
+        return false
+      }
       
       try {
-        await prisma.User.findUnique({
+        await prisma.user.findUnique({
           where: {
             email: email
           }
         })
-        .then(async (res: any) => {
+        .then(async (res) => {
           if(res === null) {
-            await prisma.User.create({
+            await prisma.user.create({
               data: {
                 name,
                 email,

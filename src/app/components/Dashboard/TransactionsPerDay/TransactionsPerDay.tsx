@@ -5,8 +5,21 @@ import React from 'react';
 import { DataChart } from '@/app/components';
 import styles from './TransactionsPerDay.module.scss'
 
+type TransactionsDataProps = {
+  data: {
+    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    datasets: {
+      borderColor: string;
+      fill: boolean;
+      label: string;
+      tension: number;
+      data: number[];
+    }[]
+  }
+}
 
-export const TransactionsPerDay = (props: any) => {
+
+export const TransactionsPerDay = (props: TransactionsDataProps) => {
   const { data } = props;
   const theme = useTheme();
 

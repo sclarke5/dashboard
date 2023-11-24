@@ -14,12 +14,14 @@ import styles from './Projects.module.scss';
 import { useDispatch } from 'react-redux';
 import { updateProjects } from '@/app/store/Slices/projectsSlice';
 import { trelloData } from '@/app/helper/trelloData';
+import { ProjectData } from '.';
+import { UserData } from './types';
 
 
 interface FadeProps {
   children: React.ReactElement;
   in?: boolean;
-  onClick?: any;
+  onClick?: React.MouseEventHandler<HTMLElement>;
   onEnter?: (node: HTMLElement, isAppearing: boolean) => void;
   onExited?: (node: HTMLElement, isAppearing: boolean) => void;
   ownerState?: any;
@@ -90,11 +92,11 @@ export const ProjectsModal = ({
   currentUser
   }: 
     {
-      show: any, 
-      setShow: any,
-      setData: any,
-      allProjects: any,
-      currentUser: any
+      show: boolean, 
+      setShow: React.Dispatch<React.SetStateAction<boolean>>,
+      setData: React.Dispatch<React.SetStateAction<ProjectData>>,
+      allProjects: ProjectData[],
+      currentUser: UserData
     }
   ) => {
   const handleClose = () => setShow(false);
@@ -109,11 +111,14 @@ export const ProjectsModal = ({
 
     const projectId = parseInt(id.replace('project-', ''));
 
-    const selectedProject = allProjects.find((proj: any) => {
+    const selectedProject = allProjects.find((proj: ProjectData) => {
       return proj.id === projectId
     })
 
-    setData(selectedProject);
+    if(selectedProject) {
+      setData(selectedProject);
+    }
+
     handleClose()
   }
 
@@ -142,12 +147,21 @@ export const ProjectsModal = ({
     }
 
     try {
-      await fetch(`/api/users/${currentUser.id}/projects`, {
+      const createdProject = await fetch(`/api/users/${currentUser.id}/projects`, {
         method: 'POST',
         body: JSON.stringify({
           projectData: projectData
         })
       })
+
+      const obj = await createdProject.json();
+
+      const newState = {
+        ...data,
+        id: obj.id
+      }
+
+      setData(newState)
 
     } catch(err) {
       console.log('create project err: ', err)
@@ -254,7 +268,7 @@ export const ProjectsModal = ({
               )}
 
               {allProjects.length > 1 && (
-                allProjects.map((project: any) => {
+                allProjects.map((project: ProjectData) => {
                   return (
                     <StyledGridItem
                       key={project.id} 

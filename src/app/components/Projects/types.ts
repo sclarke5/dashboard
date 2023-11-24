@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from "react";
+import React, { Dispatch, SetStateAction } from "react";
 
 export type TaskProps = {
   id: string;
@@ -26,7 +26,7 @@ export type TaskComponentProps = {
   index: number;
   data: ProjectData;
   setData: Dispatch<SetStateAction<ProjectData>>;
-  removeTask: any;
+  removeTask: (task: TaskProps) => void;
 }
 
 export type EditTaskProps = {
@@ -38,6 +38,7 @@ export type EditTaskProps = {
 }
 
 export type ProjectData = {
+  id?: number;
   tasks: {
     [key: string]: TaskProps;
   }
@@ -53,4 +54,10 @@ export type ProjectData = {
   }
   projectType: string | null;
   name: string;
+}
+
+export type UserData = {
+  id: number;
+  name: string;
+  email: string;
 }

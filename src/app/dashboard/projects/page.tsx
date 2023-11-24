@@ -1,16 +1,18 @@
 'use client'
 
-import { updateProjects } from '@/app/store/Slices/projectsSlice';
+// import { updateProjects } from '@/app/store/Slices/projectsSlice';
 import { Typography, Container, Grid, Button, Drawer, Tooltip, IconButton, Box } from "@mui/material"
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
 import { useEffect, useState } from "react";
 import { DragDropContext, Droppable, DropResult, DragStart, DragUpdate } from '@hello-pangea/dnd';
-import { Column, EditTask, ProjectData, ProjectsModal } from '@/app/components';
-import { useSelector, useDispatch } from "react-redux";
+import { Column, ColumnProps, EditTask, ProjectData, ProjectsModal } from '@/app/components';
+import { useSelector } from "react-redux";
 import { ClientOnly } from '@/app/components';
+import { UserData } from "@/app/components/Projects/types";
+import type { RootState } from '@/app/store/store'
 
 const Projects = () => {
-  const userObject = useSelector((state: any) => {
+  const userObject = useSelector((state: RootState) => {
     return state.userSlice;
   })
   const [currentUser, setCurrentUser] = useState(userObject);
@@ -31,7 +33,7 @@ const Projects = () => {
   const [homeIndex, setHomeIndex] = useState<number>(-1);
   const [showDrawer, setShowDrawer] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [currentColumn, setCurrentColumn] = useState(null);
+  const [currentColumn, setCurrentColumn] = useState<ColumnProps | null>(null);
 
   const toggleDrawer = () => {
     setShowDrawer(!showDrawer);
@@ -132,7 +134,7 @@ const Projects = () => {
     }
   }
 
-  const addTask = (column: any = null) => {
+  const addTask = (column: ColumnProps | null = null) => {
     setCurrentColumn(column);
     toggleDrawer();
   }
@@ -221,7 +223,7 @@ const Projects = () => {
       }
     }
 
-    if(currentUser && currentUser.id !== '') {
+    if(currentUser && currentUser.id !== -1) {
       fetchProjects();
     }
 
@@ -229,132 +231,135 @@ const Projects = () => {
 
   return (
     <ClientOnly>
-      <Typography  
-        variant='h1' 
-        sx={{ 
-          marginTop: 10, 
-          paddingBottom: 2,
-          fontWeight: 900,
-          fontSize: '4rem'
-        }}>
-          Projects
-      </Typography>
-
-      {data && data.projectType && (
-        <Box sx={{ 
-        display: 'flex', 
-        position: 'relative',
-        width: 'fit-content',
-        }}>
-        <Typography
-          variant='h4'
-          sx={{
-            paddingBottom: 4,
-            fontWeight: 600
-          }}
-        >
-          {data.projectType === 'project-strict' ? `${data.name}: Strict Workflow` : `${data.name}: Casual Project`}
+      <>
+        <Typography  
+          variant='h1' 
+          sx={{ 
+            marginTop: 10, 
+            paddingBottom: 2,
+            fontWeight: 900,
+            fontSize: '4rem'
+          }}>
+            Projects
         </Typography>
-        <Tooltip 
-          sx={{ position: 'absolute', right: '-2.5rem'}}
-          title={
-            <Typography fontSize={16}>
-              {data.projectType === 'project-strict' ? 'Stricter rules for managing professional projects with tight workflows: tasks may only be added to the first column, and columns may not be added, removed, or rearranged' : 'Looser rules for managing personal or more casual projects: tasks may be added to any column, and columns may be added, removed, and rearranged as needed'}
-            </Typography>
-          }
-        >
-          <IconButton>
-            <InfoOutlinedIcon />
-          </IconButton>
-        </Tooltip>
-      </Box>
-      )}
 
-      {data && data.projectType && (
-        <>
-          <Grid container spacing={2}>
-
-            {data.projectType === 'project-strict' && (
-              <Grid item>
-                <Button 
-                  onClick={addTask} 
-                  variant="contained"
-                  color={'primary'}
-                  >
-                  Add Task
-                </Button>
-              </Grid>
-            )}
-        
-            {data.projectType && data.projectType === 'project-open' && (
-              <Grid item>
-                <Button 
-                  onClick={addColumn} 
-                  variant="contained"
-                  color={'primary'}
-                  >
-                  Add Column
-                </Button>
-              </Grid>
-            )}
-        
-            <Grid item>
-              <Button 
-                onClick={handleSubmit} 
-                variant="contained"
-                color={'success'}
-                >
-                Save Changes
-              </Button>
-            </Grid>
-          </Grid>
-
-          <DragDropContext
-            onDragEnd={handleDragEnd}
-            onDragStart={handleDragStart}
-            onDragUpdate={handleDragUpdate}
+        {data && data.projectType && (
+          <Box sx={{ 
+          display: 'flex', 
+          position: 'relative',
+          width: 'fit-content',
+          }}>
+          <Typography
+            variant='h4'
+            sx={{
+              paddingBottom: 4,
+              fontWeight: 600
+            }}
           >
-            <Droppable 
-              droppableId='all-columns'
-              direction="horizontal" 
-              type="column"
-            >
-              {(provided) => {
-                return (
-                  <Container 
-                    {...provided.droppableProps}
-                    ref={provided.innerRef}
-                    sx={{ 
-                      display: 'grid', 
-                      width: '100%',
-                      gridTemplateColumns: gridStyling
-                    }}
-                    >
-                    {data.columnOrder.map((colId, idx) => {
-                      const column = data.columns[colId];
-                      const tasks = column.taskIds.map(taskId => data.tasks[taskId])
+            {data.projectType === 'project-strict' ? `${data.name}: Strict Workflow` : `${data.name}: Casual Project`}
+          </Typography>
+          <Tooltip 
+            sx={{ position: 'absolute', right: '-2.5rem'}}
+            title={
+              <Typography fontSize={16}>
+                {data.projectType === 'project-strict' ? 'Stricter rules for managing professional projects with tight workflows: tasks may only be added to the first column, and columns may not be added, removed, or rearranged' : 'Looser rules for managing personal or more casual projects: tasks may be added to any column, and columns may be added, removed, and rearranged as needed'}
+              </Typography>
+            }
+          >
+            <IconButton>
+              <InfoOutlinedIcon />
+            </IconButton>
+          </Tooltip>
+        </Box>
+        )}
 
-                      return (
-                        <Column 
-                          key={column.id}
-                          column={column}
-                          tasks={tasks}
-                          disabledFlag={idx > homeIndex + 1 ? true : false} 
-                          index={idx}
-                          setData={setData}
-                          data={data}
-                          addTask={addTask}
-                        />
-                      )
-                    })}
-                    {provided.placeholder}
-                  </Container>
-                )
-              }}
-            </Droppable>
-          </DragDropContext>
-        </>
-      )}
+        {data && data.projectType && (
+          <>
+            <Grid container spacing={2}>
+
+              {data.projectType === 'project-strict' && (
+                <Grid item>
+                  <Button 
+                    onClick={() => addTask()} 
+                    variant="contained"
+                    color={'primary'}
+                    >
+                    Add Task
+                  </Button>
+                </Grid>
+              )}
+          
+              {data.projectType && data.projectType === 'project-open' && (
+                <Grid item>
+                  <Button 
+                    onClick={addColumn} 
+                    variant="contained"
+                    color={'primary'}
+                    >
+                    Add Column
+                  </Button>
+                </Grid>
+              )}
+          
+              <Grid item>
+                <Button 
+                  onClick={handleSubmit} 
+                  variant="contained"
+                  color={'success'}
+                  >
+                  Save Changes
+                </Button>
+              </Grid>
+            </Grid>
+
+            <DragDropContext
+              onDragEnd={handleDragEnd}
+              onDragStart={handleDragStart}
+              onDragUpdate={handleDragUpdate}
+            >
+              <Droppable 
+                droppableId='all-columns'
+                direction="horizontal" 
+                type="column"
+              >
+                {(provided) => {
+                  return (
+                    <Container 
+                      {...provided.droppableProps}
+                      ref={provided.innerRef}
+                      sx={{ 
+                        display: 'grid', 
+                        width: '100%',
+                        gridTemplateColumns: gridStyling
+                      }}
+                      >
+                      {data.columnOrder.map((colId, idx) => {
+                        const column = data.columns[colId];
+                        const tasks = column.taskIds.map(taskId => data.tasks[taskId])
+
+                        return (
+                          <Column 
+                            key={column.id}
+                            column={column}
+                            tasks={tasks}
+                            disabledFlag={idx > homeIndex + 1 ? true : false} 
+                            index={idx}
+                            setData={setData}
+                            data={data}
+                            addTask={() => addTask()}
+                          />
+                        )
+                      })}
+                      {provided.placeholder}
+                    </Container>
+                  )
+                }}
+              </Droppable>
+            </DragDropContext>
+          </>
+        )}
+      </>
+ 
       
       <Drawer 
         anchor='right'

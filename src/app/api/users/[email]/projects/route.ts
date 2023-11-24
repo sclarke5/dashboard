@@ -1,10 +1,9 @@
-//@ts-nocheck
-
 import prisma from "@/app/lib/prisma"
+import { NextApiResponse } from "next"
 
-export const GET = async(req, { params }) => {
+export const GET = async(req: Request, { params }: { params: { email: string } }) => {
   try {
-    const user = await prisma.User.findUnique({
+    const user = await prisma.user.findUnique({
       where: {
         id: parseInt(params.email)
       }
@@ -14,7 +13,7 @@ export const GET = async(req, { params }) => {
       return new Response('User not found', { status: 404 })
     }
 
-    const projects = await prisma.Project.findMany({
+    const projects = await prisma.project.findMany({
       where: {
         userId: user.id
       }
@@ -27,11 +26,11 @@ export const GET = async(req, { params }) => {
   }
 }
 
-export const PATCH = async(req, { params }) => {
+export const PATCH = async(req: Request, { params }: { params: { id: string } }) => {
   const { projectData } = await req.json();
 
   try {
-    const updateProject = await prisma.Project.update({
+    const updateProject = await prisma.project.update({
       where: {
         id: projectData.id
       },
@@ -51,11 +50,11 @@ export const PATCH = async(req, { params }) => {
   }
 }
 
-export const POST = async(req, res) => {
+export const POST = async(req: Request, res: NextApiResponse) => {
   const { projectData } = await req.json();
     
   try {
-    const newProject = await prisma.Project.create({
+    const newProject = await prisma.project.create({
       data: projectData
     });
 

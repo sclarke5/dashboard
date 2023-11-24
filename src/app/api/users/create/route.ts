@@ -1,12 +1,11 @@
-// @ts-nocheck
-
 import prisma from "@/app/lib/prisma";
+import { NextApiResponse } from "next";
 
-export const POST = async(req, res) => {
+export const POST = async(req: Request, res: NextApiResponse) => {
   const { name, email } = await req.json();
     
   try {
-    const newUser = await prisma.User.create({
+    const newUser = await prisma.user.create({
       data: {
         name,
         email,

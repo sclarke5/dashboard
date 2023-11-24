@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-export const ClientOnly = ({ children, ...delegated }: { children: any }) => {
+export const ClientOnly = ({ children, ...delegated }: { children: JSX.Element | JSX.Element[] }) => {
 
   const [hasMounted, setHasMounted] = useState(false);
 

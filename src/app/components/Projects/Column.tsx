@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { Box, Button, Paper, Typography, useTheme } from '@mui/material';
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import ClearIcon from '@mui/icons-material/Clear';
-import { Draggable, Droppable } from '@hello-pangea/dnd';
+import { Draggable, DraggableProvided, Droppable } from '@hello-pangea/dnd';
 import { ColumnComponentProps, TaskProps } from './types';
 import styles from './Projects.module.scss';
 import { Task } from './Task';
@@ -42,7 +42,7 @@ export const Column = (props: ColumnComponentProps) => {
     setData(newState);
   }
 
-  const handleRemoveColumn = (ev: any) => {
+  const handleRemoveColumn = (ev: React.MouseEvent) => {
     const columns = JSON.parse(JSON.stringify(data.columns));
     const columnOrder = JSON.parse(JSON.stringify(data.columnOrder));
 
@@ -65,7 +65,7 @@ export const Column = (props: ColumnComponentProps) => {
     setData(newState);
   }
 
-  const handleRemoveTask = (task: any) => {
+  const handleRemoveTask = (task: TaskProps) => {
     const tasks = JSON.parse(JSON.stringify(data.tasks));
     const taskIds = JSON.parse(JSON.stringify(column.taskIds));
 
@@ -93,7 +93,7 @@ export const Column = (props: ColumnComponentProps) => {
     setData(newState);
   }
 
-  const renderColumnHeading = (provided: any) => {
+  const renderColumnHeading = (provided: DraggableProvided) => {
     if(data.projectType === 'project-open') {
       return (
         <Box sx={{ 

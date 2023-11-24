@@ -1,6 +1,6 @@
 import { Box, Button, Grid, Paper, TextField } from '@mui/material'
 import React, { useEffect, useState } from 'react';
-import { EditTaskProps, TaskProps } from './types';
+import { EditTaskProps, ProjectData, TaskProps } from './types';
 
 export const EditTask = (props: EditTaskProps) => {
   const [formData, setFormData] = useState({ id: '', content: '' });
@@ -42,7 +42,7 @@ export const EditTask = (props: EditTaskProps) => {
         taskKey = `task-${tasks.length + 1}`
       }
 
-      const newTask: any = { 
+      const newTask: ProjectData['tasks'] = { 
         [taskKey]: { 
           id: taskKey, 
           content: formData.content 
@@ -79,7 +79,7 @@ export const EditTask = (props: EditTaskProps) => {
         taskKey = `task-${tasks.length + 1}`
       }
 
-      const newTask: any = { 
+      const newTask: ProjectData['tasks'] = { 
         [taskKey]: { 
           id: taskKey, 
           content: formData.content 
