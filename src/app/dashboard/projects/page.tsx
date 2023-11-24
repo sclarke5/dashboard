@@ -1,9 +1,9 @@
 'use client'
 
 // import { updateProjects } from '@/app/store/Slices/projectsSlice';
-import { Typography, Container, Grid, Button, Drawer, Tooltip, IconButton, Box } from "@mui/material"
+import { Typography, Container, Grid, Button, Drawer, Tooltip, IconButton, Box, TextField } from "@mui/material"
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DragDropContext, Droppable, DropResult, DragStart, DragUpdate } from '@hello-pangea/dnd';
 import { Column, ColumnProps, EditTask, ProjectData, ProjectsModal } from '@/app/components';
 import { useSelector } from "react-redux";
@@ -134,6 +134,15 @@ const Projects = () => {
     }
   }
 
+  const handleProjectNameChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = ev.currentTarget;
+    const newState = {
+      ...data,
+      name: value
+    }
+    setData(newState)
+  }
+
   const addTask = (column: ColumnProps | null = null) => {
     setCurrentColumn(column);
     toggleDrawer();
@@ -244,22 +253,40 @@ const Projects = () => {
         </Typography>
 
         {data && data.projectType && (
-          <Box sx={{ 
-          display: 'flex', 
-          position: 'relative',
-          width: 'fit-content',
+          <Box 
+            sx={{ 
+            width: 'fit-content',
           }}>
+            <TextField 
+              size="medium"
+              sx={{
+                ".MuiInputBase-input": {
+                  fontSize: '2.5rem',
+                  fontWeight: 600,
+                  maxWidth: 'fit-content'
+                }
+              }}
+              variant="standard"
+              value={data.name}
+              onChange={handleProjectNameChange}
+            />
+          <Box sx={{ 
+            display: 'flex',
+            alignItems: 'center'
+            }}>
           <Typography
-            variant='h4'
+            variant='h5'
             sx={{
-              paddingBottom: 4,
-              fontWeight: 600
+              marginTop: 2,
+              marginBottom: 4,
+              fontWeight: 600,
+              // position: 'relative'
             }}
           >
-            {data.projectType === 'project-strict' ? `${data.name}: Strict Workflow` : `${data.name}: Casual Project`}
+            {data.projectType === 'project-strict' ? 'Strict Workflow' : 'Casual Project'}
           </Typography>
           <Tooltip 
-            sx={{ position: 'absolute', right: '-2.5rem'}}
+            sx={{ marginBottom: 2.5 }}
             title={
               <Typography fontSize={16}>
                 {data.projectType === 'project-strict' ? 'Stricter rules for managing professional projects with tight workflows: tasks may only be added to the first column, and columns may not be added, removed, or rearranged' : 'Looser rules for managing personal or more casual projects: tasks may be added to any column, and columns may be added, removed, and rearranged as needed'}
@@ -270,6 +297,7 @@ const Projects = () => {
               <InfoOutlinedIcon />
             </IconButton>
           </Tooltip>
+          </Box>
         </Box>
         )}
 
