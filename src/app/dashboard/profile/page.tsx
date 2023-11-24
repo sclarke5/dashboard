@@ -47,16 +47,18 @@ const Profile = () => {
 
   useEffect(() => {
     const fetchUser = async() => {
-      try {
-        const user = await fetch(`/api/users/${session?.user?.email}`, {
-          method: 'GET',
-        })
-
-        const data = await user.json();
-        setRetrievedData(data);
+      if(session && session.user) {
+        try {
+          const user = await fetch(`/api/users/${session?.user?.email}`, {
+            method: 'GET',
+          })
   
-      } catch(err) {
-        console.log('get user error: ', err)
+          const data = await user.json();
+          setRetrievedData(data);
+    
+        } catch(err) {
+          console.log('get user error: ', err)
+        }
       }
     }
 
@@ -84,7 +86,7 @@ const Profile = () => {
         }}>Profile</Typography>
       <Box>
         <Typography variant='h4' sx={{ paddingBottom: 4, fontWeight: 500 }}>
-          Hey {retrievedData ? retrievedData.name : 'User'}, welcome to your profile 
+          Hey {formData.fullName ? formData.fullName : 'User'}, welcome to your profile!
         </Typography>
         <Paper sx={{ padding: '3rem 3rem' }} >
           <Grid container justifyContent='center'>

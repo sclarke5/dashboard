@@ -374,7 +374,7 @@ const Projects = () => {
                             index={idx}
                             setData={setData}
                             data={data}
-                            addTask={() => addTask()}
+                            addTask={addTask}
                           />
                         )
                       })}
