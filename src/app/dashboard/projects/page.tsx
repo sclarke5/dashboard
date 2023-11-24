@@ -338,6 +338,18 @@ const Projects = () => {
                   Save Changes
                 </Button>
               </Grid>
+
+              {allProjects.length > 1 && (
+                <Grid item>
+                  <Button 
+                    onClick={() => setShowModal(true)} 
+                    variant="outlined"
+                    color={'info'}
+                    >
+                    Change Project
+                  </Button>
+                </Grid>
+              )}
             </Grid>
 
             <DragDropContext
