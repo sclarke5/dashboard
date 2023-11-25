@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Button, Paper, Typography, useTheme } from '@mui/material';
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import ClearIcon from '@mui/icons-material/Clear';
@@ -141,6 +141,10 @@ export const Column = (props: ColumnComponentProps) => {
       )
     }
   }
+
+  useEffect(() => {
+    setColumnName(column.title)
+  }, [column.title])
 
   return (
     <Draggable draggableId={props.column.id} index={props.index}>
