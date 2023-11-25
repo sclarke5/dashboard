@@ -89,17 +89,27 @@ export const ProjectsModal = ({
   setShow, 
   setData,
   allProjects,
-  currentUser
+  currentUser,
+  newProject,
+  setNewProject
   }: 
     {
       show: boolean, 
       setShow: React.Dispatch<React.SetStateAction<boolean>>,
       setData: React.Dispatch<React.SetStateAction<ProjectData>>,
       allProjects: ProjectData[],
-      currentUser: UserData
+      currentUser: UserData,
+      newProject: boolean,
+      setNewProject: React.Dispatch<React.SetStateAction<boolean>>,
     }
   ) => {
-  const handleClose = () => setShow(false);
+  
+  const handleClose = () => {
+    if(newProject) {
+      setNewProject(false)
+    }
+    setShow(false);
+  }
 
   const theme = useTheme();
   // const dispatch = useDispatch();
@@ -185,10 +195,10 @@ export const ProjectsModal = ({
         <Fade in={show}>
           <Box sx={style}>
             <Typography id="spring-modal-title" variant="h3" sx={{ fontWeight: '600', textAlign: 'center' }} component="h2">
-              {allProjects.length > 1 ? 'Choose Project' : 'Choose Template' }
+              {allProjects.length > 1 && !newProject ? 'Choose Project' : 'Choose Template' }
             </Typography>
             <Typography id="spring-modal-description" variant='h5' sx={{ my: 2, textAlign: 'center' }}>
-              {allProjects.length > 1 ? 'Choose from your existing projects' : 'Choose from the following templates to generate a project:' }
+              {allProjects.length > 1 && !newProject ? 'Choose from your existing projects' : 'Choose from the following templates to generate a project:' }
             </Typography>
             <Grid container gap={2} sx={{ 
               marginTop: '2rem',
@@ -198,76 +208,76 @@ export const ProjectsModal = ({
               height: '40%'
               }}
             >
-              {allProjects.length === 0 && (
+              {(allProjects.length === 0 || newProject) && (
                 <>
+                  <StyledGridItem 
+                  item 
+                  id="project-strict"
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    border: '4px solid transparent',
+                    width: '40%',
+                    padding: '2rem',
+                    alignItems: 'center',
+                  }}
+                  onClick={setProjectType}
+                >
+                  <Typography variant='h6' sx={{ fontWeight: '600' }}>
+                    Strict
+                  </Typography>
+                  <InputIcon sx={{ 
+                      width: '5rem', 
+                      height: '5rem', 
+                      marginBottom: '1rem',
+                      color: theme.palette.secondary.main
+                    }}
+                  />
+                  <Typography 
+                    variant='body1'
+                    sx={{ textAlign: 'center' }}  
+                  >
+                    Users may only add tasks to the first column; columns may not be added, removed or rearranged
+                  </Typography>
+                </StyledGridItem>
                 <StyledGridItem 
-                item 
-                id="project-strict"
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'center',
-                  border: '4px solid transparent',
-                  width: '40%',
-                  padding: '2rem',
-                  alignItems: 'center',
-                }}
-                onClick={setProjectType}
-              >
-                <Typography variant='h6' sx={{ fontWeight: '600' }}>
-                  Strict
-                </Typography>
-                <InputIcon sx={{ 
-                    width: '5rem', 
-                    height: '5rem', 
-                    marginBottom: '1rem',
-                    color: theme.palette.secondary.main
+                  item 
+                  id="project-open"
+                  className={styles.modalGridItem}
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    border: '4px solid transparent',
+                    width: '40%',
+                    padding: '2rem',
+                    alignItems: 'center',
                   }}
-                />
-                <Typography 
-                  variant='body1'
-                  sx={{ textAlign: 'center' }}  
+                  onClick={setProjectType}
                 >
-                  Users may only add tasks to the first column; columns may not be added, removed or rearranged
-                </Typography>
-              </StyledGridItem>
-              <StyledGridItem 
-                item 
-                id="project-open"
-                className={styles.modalGridItem}
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'center',
-                  border: '4px solid transparent',
-                  width: '40%',
-                  padding: '2rem',
-                  alignItems: 'center',
-                }}
-                onClick={setProjectType}
-              >
-                <Typography variant='h6' sx={{ fontWeight: '600' }}>
-                  Open
-                </Typography>
-                <AccountTreeIcon 
-                  sx={{ 
-                    width: '5rem', 
-                    height: '5rem', 
-                    marginBottom: '1rem',
-                    color: theme.palette.secondary.main
-                  }}
-                />
-                <Typography 
-                  variant='body1'
-                  sx={{ textAlign: 'center' }}  
-                >
-                  Users may add tasks to any column; columns may be added, rearranged, and removed as needed
-                </Typography>
-              </StyledGridItem>
+                  <Typography variant='h6' sx={{ fontWeight: '600' }}>
+                    Open
+                  </Typography>
+                  <AccountTreeIcon 
+                    sx={{ 
+                      width: '5rem', 
+                      height: '5rem', 
+                      marginBottom: '1rem',
+                      color: theme.palette.secondary.main
+                    }}
+                  />
+                  <Typography 
+                    variant='body1'
+                    sx={{ textAlign: 'center' }}  
+                  >
+                    Users may add tasks to any column; columns may be added, rearranged, and removed as needed
+                  </Typography>
+                </StyledGridItem>
                 </>
               )}
 
-              {allProjects.length > 1 && (
+              {allProjects.length > 1 && !newProject && (
                 allProjects.map((project: ProjectData) => {
                   return (
                     <StyledGridItem

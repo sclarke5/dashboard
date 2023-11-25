@@ -34,6 +34,7 @@ const Projects = () => {
   const [showDrawer, setShowDrawer] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [currentColumn, setCurrentColumn] = useState<ColumnProps | null>(null);
+  const [newProject, setNewProject] = useState(false);
 
   const toggleDrawer = () => {
     setShowDrawer(!showDrawer);
@@ -198,6 +199,11 @@ const Projects = () => {
     }
   }
 
+  const handleNewProject = (ev: React.MouseEvent) => {
+    setNewProject(true);
+    setShowModal(true)
+  }
+
   let gridStyling = '';
 
   if(data && data.columnOrder && data.columnOrder.length > 0) {
@@ -350,6 +356,16 @@ const Projects = () => {
                   </Button>
                 </Grid>
               )}
+
+              <Grid item>
+                <Button 
+                  onClick={handleNewProject} 
+                  variant="contained"
+                  color={'info'}
+                  >
+                  New Project
+                </Button>
+              </Grid>
             </Grid>
 
             <DragDropContext
@@ -420,6 +436,8 @@ const Projects = () => {
         setShow={setShowModal}
         allProjects={allProjects}
         currentUser={currentUser}
+        newProject={newProject}
+        setNewProject={setNewProject}
       />
     </ClientOnly>
   )
