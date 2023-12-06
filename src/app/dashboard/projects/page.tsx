@@ -1,12 +1,12 @@
 'use client'
 
-// import { updateProjects } from '@/app/store/Slices/projectsSlice';
+import { selectProjectById, selectAllProjects, updateProject, fetchProjects } from '@/app/store/Slices/projectsSlice';
 import { Typography, Container, Grid, Button, Drawer, Tooltip, IconButton, Box, TextField } from "@mui/material"
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
 import React, { useEffect, useState } from "react";
 import { DragDropContext, Droppable, DropResult, DragStart, DragUpdate } from '@hello-pangea/dnd';
 import { Column, ColumnProps, EditTask, ProjectData, ProjectsModal } from '@/app/components';
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { ClientOnly } from '@/app/components';
 import { UserData } from "@/app/components/Projects/types";
 import type { RootState } from '@/app/store/store'
@@ -15,8 +15,16 @@ const Projects = () => {
   const userObject = useSelector((state: RootState) => {
     return state.userSlice;
   })
+
+  const projectsObject = useSelector((state: RootState) => {
+    return state.projectsSlice.projects;
+  })
+
+  const projectsStatus = useSelector((state: RootState) => state.projectsSlice.status)
+
   const [currentUser, setCurrentUser] = useState(userObject);
-  const [allProjects, setAllProjects] = useState([]);
+
+  const dispatch = useDispatch();
 
   const [data, setData] = useState<ProjectData>(
     {
@@ -184,19 +192,22 @@ const Projects = () => {
 
   const handleSubmit = async(ev: React.MouseEvent<HTMLButtonElement>) => {
     ev.preventDefault();
+    if(data && data.name){
+      dispatch(updateProject({ data }));
+    }
     // dispatch(updateProjects({ data }));
 
-    try {
-      await fetch(`/api/users/${currentUser.id}/projects`, {
-        method: 'PATCH',
-        body: JSON.stringify({
-          projectData: data
-        })
-      })
+    // try {
+    //   await fetch(`/api/users/${currentUser.id}/projects`, {
+    //     method: 'PATCH',
+    //     body: JSON.stringify({
+    //       projectData: data
+    //     })
+    //   })
 
-    } catch(err) {
-      console.log('update user err: ', err)
-    }
+    // } catch(err) {
+    //   console.log('update user err: ', err)
+    // }
   }
 
   const handleNewProject = (ev: React.MouseEvent) => {
@@ -217,32 +228,22 @@ const Projects = () => {
   }, [userObject])
 
   useEffect(() => {
-    const fetchProjects = async() => {
-      try {
-        const projects = await fetch(`/api/users/${currentUser.id}/projects`, {
-          method: 'GET',
-        })
 
-        const data = await projects.json();
+    if(currentUser && currentUser.id !== -1 && projectsStatus) {
+      //@ts-ignore
+      dispatch(fetchProjects(currentUser))
       
-        setAllProjects(data);
-
-        if(data.length > 1 || data.length < 1) {
-          setShowModal(true)
-        } else {
-          setData(data[0]);
-        }
-  
-      } catch(err) {
-        console.log('fetch project  err: ', err)
-      }
     }
 
-    if(currentUser && currentUser.id !== -1) {
-      fetchProjects();
-    }
+  }, [currentUser, dispatch])
 
-  }, [currentUser])
+  useEffect(() => {
+    if(projectsObject.length === 1){
+      setData(projectsObject[0])
+    } else if (projectsObject.length > 1) {
+      setShowModal(true);
+    }
+  }, [projectsObject])
 
   return (
     <ClientOnly>
@@ -345,7 +346,7 @@ const Projects = () => {
                 </Button>
               </Grid>
 
-              {allProjects.length > 1 && (
+              {projectsObject.length > 1 && (
                 <Grid item>
                   <Button 
                     onClick={() => setShowModal(true)} 
@@ -434,7 +435,7 @@ const Projects = () => {
         setData={setData}
         show={showModal}
         setShow={setShowModal}
-        allProjects={allProjects}
+        allProjects={projectsObject}
         currentUser={currentUser}
         newProject={newProject}
         setNewProject={setNewProject}

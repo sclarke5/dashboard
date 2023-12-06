@@ -12,7 +12,7 @@ import { useSpring, animated } from '@react-spring/web';
 import { Grid, styled, useTheme } from '@mui/material';
 import styles from './Projects.module.scss';
 import { useDispatch } from 'react-redux';
-import { updateProjects } from '@/app/store/Slices/projectsSlice';
+import { addNewProject, projectAdded, updateProject } from '@/app/store/Slices/projectsSlice';
 import { trelloData } from '@/app/helper/trelloData';
 import { ProjectData } from '.';
 import { UserData } from './types';
@@ -112,7 +112,7 @@ export const ProjectsModal = ({
   }
 
   const theme = useTheme();
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   const loadProject = (ev: React.MouseEvent) => {
     ev.preventDefault();
@@ -156,26 +156,8 @@ export const ProjectsModal = ({
       name: 'New Project'
     }
 
-    try {
-      const createdProject = await fetch(`/api/users/${currentUser.id}/projects`, {
-        method: 'POST',
-        body: JSON.stringify({
-          projectData: projectData
-        })
-      })
-
-      const obj = await createdProject.json();
-
-      const newState = {
-        ...data,
-        id: obj.id
-      }
-
-      setData(newState)
-
-    } catch(err) {
-      console.log('create project err: ', err)
-    }
+    //@ts-ignore
+    dispatch(addNewProject(projectData, currentUser));
   }
 
   return (
