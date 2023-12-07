@@ -193,21 +193,9 @@ const Projects = () => {
   const handleSubmit = async(ev: React.MouseEvent<HTMLButtonElement>) => {
     ev.preventDefault();
     if(data && data.name){
-      dispatch(updateProject({ data }));
+      //@ts-ignore
+      dispatch(updateProject(data, currentUser));
     }
-    // dispatch(updateProjects({ data }));
-
-    // try {
-    //   await fetch(`/api/users/${currentUser.id}/projects`, {
-    //     method: 'PATCH',
-    //     body: JSON.stringify({
-    //       projectData: data
-    //     })
-    //   })
-
-    // } catch(err) {
-    //   console.log('update user err: ', err)
-    // }
   }
 
   const handleNewProject = (ev: React.MouseEvent) => {
@@ -238,12 +226,14 @@ const Projects = () => {
   }, [currentUser, dispatch])
 
   useEffect(() => {
-    if(projectsObject.length === 1){
+    if(projectsObject && projectsObject.length === 1){
       setData(projectsObject[0])
     } else if (projectsObject.length > 1) {
       setShowModal(true);
     }
   }, [projectsObject])
+
+  console.log('proj obj ', projectsObject)
 
   return (
     <ClientOnly>

@@ -24,18 +24,6 @@ const projectsSlice = createSlice({
         }
       }
     },
-    updateProject: (state, action) => {
-      // const { id, name } = action.payload.data;
-      // console.log('name ', name)
-      // const existingProject = state.projects.find((project: any) => project.id === id)
-
-      // if(existingProject){
-      //   existingProject.name = name;
-      // }
-
-      // console.log('hello ', existingProject)
-      // saveState('projects', action.payload.data);
-    }
   },
   extraReducers(builder) {
     builder
@@ -54,12 +42,20 @@ const projectsSlice = createSlice({
       .addCase(addNewProject.fulfilled, (state: any, action: any) => {
         state.projects.push(action.payload)
       }) 
+      .addCase(updateProject.fulfilled, (state: any, action: any) => {
+        let projIdx;
+        for(let i = 0; i < state.projects.length; i++){
+          if(state.projects[i].id === action.payload.id) {
+            projIdx = i;
+          }
+        }
+        state.projects.splice(projIdx, 1, action.payload)
+      })
   }
 });
 
 export const { 
   projectAdded,
-  updateProject
 } = projectsSlice.actions;
 
 export const selectAllProjects = (state: any) => state.projects;
@@ -90,6 +86,29 @@ export const addNewProject = createAsyncThunk('projects/addNewProject', async (p
   } catch(err) {
     console.log('create project err: ', err)
   }
+})
+
+export const updateProject = createAsyncThunk('projects/updateProject', async(data: any, currentUser: any, ) => {
+  const projectData = { data }
+  console.log('patchData ', data)
+
+    try {
+      const patchedProject = await fetch(`/api/users/${currentUser.id}/projects`, {
+        method: 'PATCH',
+        body: JSON.stringify({
+          projectData: projectData.data
+        })
+      })
+
+      const patchData = await patchedProject.json();
+
+      return patchData;
+
+
+    } catch(err) {
+      console.log('update user err: ', err)
+    }
+
 })
 
 export const fetchProjects = createAsyncThunk('projects/fetchProjects', async (currentUser: any) => {
