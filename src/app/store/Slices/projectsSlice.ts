@@ -1,6 +1,4 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { loadState } from '@/app/helper/localStorage';
-import { trelloData } from '@/app/helper/trelloData';
 
 const projectsSlice = createSlice({
   name: 'projects',
@@ -8,15 +6,22 @@ const projectsSlice = createSlice({
     projects: [],
     status: 'idle',
     error: null,
+    currentProject: null
   },
   reducers: {
+    setCurrentProject: (state, action) => {
+      state.currentProject = action.payload;
+    },
+    getCurrentProject: (state) => {
+      if(state.currentProject !== null) {
+        return state.currentProject;
+      }
+    },
     projectAdded: {
       reducer(state: any, action: any) {
         state.projects.push(action.payload);
       },
       prepare(projectData) {
-        // const { data, userId, name } = projectData;
-        console.log('data' , projectData)
         return {
           payload: {
             projectData
@@ -41,6 +46,7 @@ const projectsSlice = createSlice({
       })
       .addCase(addNewProject.fulfilled, (state: any, action: any) => {
         state.projects.push(action.payload)
+        state.currentProject = action.payload;
       }) 
       .addCase(updateProject.fulfilled, (state: any, action: any) => {
         let projIdx;
@@ -50,17 +56,16 @@ const projectsSlice = createSlice({
           }
         }
         state.projects.splice(projIdx, 1, action.payload)
+        state.currentProject = action.payload;
       })
   }
 });
 
 export const { 
   projectAdded,
+  setCurrentProject,
+  getCurrentProject
 } = projectsSlice.actions;
-
-export const selectAllProjects = (state: any) => state.projects;
-
-export const selectProjectById = (state: any, projectId: string) => state.projects.find((project: any) => project.id === projectId)
 
 export const addNewProject = createAsyncThunk('projects/addNewProject', async (projectData: any, currentUser: any) => {
 
@@ -88,15 +93,16 @@ export const addNewProject = createAsyncThunk('projects/addNewProject', async (p
   }
 })
 
-export const updateProject = createAsyncThunk('projects/updateProject', async(data: any, currentUser: any, ) => {
-  const projectData = { data }
+export const updateProject = createAsyncThunk('projects/updateProject', async(projectData: any) => {
+  const { currentUser, data } = projectData
+  
   console.log('patchData ', data)
 
     try {
       const patchedProject = await fetch(`/api/users/${currentUser.id}/projects`, {
         method: 'PATCH',
         body: JSON.stringify({
-          projectData: projectData.data
+          projectData: data
         })
       })
 

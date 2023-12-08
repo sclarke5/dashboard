@@ -1,6 +1,6 @@
 'use client'
 
-import { selectProjectById, selectAllProjects, updateProject, fetchProjects } from '@/app/store/Slices/projectsSlice';
+import { updateProject, fetchProjects } from '@/app/store/Slices/projectsSlice';
 import { Typography, Container, Grid, Button, Drawer, Tooltip, IconButton, Box, TextField } from "@mui/material"
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
 import React, { useEffect, useState } from "react";
@@ -22,21 +22,27 @@ const Projects = () => {
 
   const projectsStatus = useSelector((state: RootState) => state.projectsSlice.status)
 
+  const currentProject = useSelector((state: RootState) => {
+    return state.projectsSlice.currentProject
+  })
+
   const [currentUser, setCurrentUser] = useState(userObject);
 
   const dispatch = useDispatch();
 
-  const [data, setData] = useState<ProjectData>(
-    {
-      tasks: {},
-      columns: {},
-      columnOrder: [],
-      archivedTasks: {},
-      archivedColumns: {},
-      projectType: '',
-      name: ''
-    }
-  );
+  //  = useState<ProjectData>(
+  //   {
+  //     tasks: {},
+  //     columns: {},
+  //     columnOrder: [],
+  //     archivedTasks: {},
+  //     archivedColumns: {},
+  //     projectType: '',
+  //     name: ''
+  //   }
+  // );
+
+  const [data, setData] = useState<ProjectData | null>(currentProject)
 
   const [homeIndex, setHomeIndex] = useState<number>(-1);
   const [showDrawer, setShowDrawer] = useState(false);
@@ -49,9 +55,11 @@ const Projects = () => {
   }
 
   const handleDragStart = (start: DragStart) => {
-    const homeIdx = data.columnOrder.indexOf(start.source.droppableId)
-
-    setHomeIndex(homeIdx);
+    let homeIdx;
+    if(data) {
+      homeIdx = data.columnOrder.indexOf(start.source.droppableId)
+      setHomeIndex(homeIdx);
+    }
   }
 
   const handleDragUpdate = (update: DragUpdate) => {
@@ -193,8 +201,9 @@ const Projects = () => {
   const handleSubmit = async(ev: React.MouseEvent<HTMLButtonElement>) => {
     ev.preventDefault();
     if(data && data.name){
+      const arg = { data, currentUser }
       //@ts-ignore
-      dispatch(updateProject(data, currentUser));
+      dispatch(updateProject(arg));
     }
   }
 
@@ -218,22 +227,27 @@ const Projects = () => {
   useEffect(() => {
 
     if(currentUser && currentUser.id !== -1 && projectsStatus) {
-      //@ts-ignore
-      dispatch(fetchProjects(currentUser))
-      
+      if(!currentProject){
+        //@ts-ignore
+        dispatch(fetchProjects(currentUser))
+      }
     }
-
-  }, [currentUser, dispatch])
+  }, [currentUser])
 
   useEffect(() => {
     if(projectsObject && projectsObject.length === 1){
       setData(projectsObject[0])
-    } else if (projectsObject.length > 1) {
+      setShowModal(false)
+    } else if (!currentProject && projectsObject.length > 1) {
       setShowModal(true);
+    } else if(!currentProject && projectsObject.length === 0) {
+      setShowModal(true)
     }
   }, [projectsObject])
 
-  console.log('proj obj ', projectsObject)
+  useEffect(() => {
+    setData(currentProject)
+  }, [currentProject])
 
   return (
     <ClientOnly>

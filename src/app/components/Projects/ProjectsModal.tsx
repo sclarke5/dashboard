@@ -12,7 +12,7 @@ import { useSpring, animated } from '@react-spring/web';
 import { Grid, styled, useTheme } from '@mui/material';
 import styles from './Projects.module.scss';
 import { useDispatch } from 'react-redux';
-import { addNewProject, projectAdded, updateProject } from '@/app/store/Slices/projectsSlice';
+import { addNewProject, setCurrentProject } from '@/app/store/Slices/projectsSlice';
 import { trelloData } from '@/app/helper/trelloData';
 import { ProjectData } from '.';
 import { UserData } from './types';
@@ -126,6 +126,7 @@ export const ProjectsModal = ({
     })
 
     if(selectedProject) {
+      dispatch(setCurrentProject(selectedProject))
       setData(selectedProject);
     }
 
@@ -153,7 +154,6 @@ export const ProjectsModal = ({
     const projectData = { 
       ...data, 
       userId: currentUser.id,
-      name: 'New Project'
     }
 
     //@ts-ignore
